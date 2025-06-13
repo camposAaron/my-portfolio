@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+:root {
+	--font-heading: "Space Grotesk", sans-serif;
+	--font-body: "Inter", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--font-heading);
+	font-weight: 600;
+}
+
+body,
+p,
+a,
+li,
+span {
+	font-family: var(--font-body);
+	font-weight: 400;
+}
+
+nav a {
+	font-family: "Space Grotesk", sans-serif;
+	/* Your new font */
+	font-weight: 600;
+	/* Optional: make them a bit thicker */
+	letter-spacing: 0.5px;
+	/* Optional: a little spacing for better look */
+	color: #ffffff;
+	text-decoration: none;
+	transition: color 0.3s;
+}
+
+nav a:hover {
+	color: #00ffff;
+	/* Neon hover color */
+}
+
+html {
+	scroll-behavior: smooth;
+}

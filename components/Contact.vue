@@ -67,9 +67,9 @@
                       <h3 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Let's Connect</h3>
                       <div class="flex justify-center space-x-6 hover:cursor-pointer">
                           <a v-for="social in socialLinks" :key="social.name" :href="social.url" target="_blank"
-                              class="text-gray-600  hover:text-cyan-400 dark:text-gray-300 dark:hover:text-blue-500 transition-colors"
+                              class="text-gray-400 hover:text-cyan-400 transition-colors"
                               :aria-label="social.name">
-                              <component :is="social.icon" class="w-8 h-8 hover:bg-cyan-400" />
+                            <Icon :name="social.icon" size="1.8em"/>
                           </a>
                       </div>
                   </div>
@@ -139,12 +139,12 @@ try {
 
 // Social Links
 const socialLinks = [
-{ name: "GitHub", url: "https://github.com/yourusername", icon: null },
+{ name: "GitHub", url: "https://github.com/yourusername", icon: 'entypo-social:github' },
 {
   name: "LinkedIn",
   url: "https://linkedin.com/in/yourprofile",
-  icon: null,
+  icon: 'entypo-social:linkedin',
 },
-{ name: "Resume", url: "/resume.pdf", icon: null },
+{ name: "Instagran", url: "/resume.pdf", icon: 'entypo-social:instagram' },
 ]
 </script>

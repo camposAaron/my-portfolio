@@ -84,9 +84,13 @@ onUnmounted(() => {
         <NavMenu class="text-sm not-[]:hidden md:flex space-x-6 lg:space-x-8 items-center" :navLinks="navLinks"/>  
         <div class="flex items-center space-x-4">
           <ToggleButton :aria-label="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'" @toggle="toggleDarkMode">
+			<Icon v-if="isDarkMode" name="heroicons:moon-20-solid"/>
+			<Icon v-else name="heroicons:sun-20-solid"/>
           </ToggleButton>
           <div class="md:hidden">
             <ToggleButton aria-label="Toggle mobile menu" @toggle="mobileMenuOpen = !mobileMenuOpen">
+				<Icon v-if="!mobileMenuOpen" name="heroicons:bars-3-bottom-left-16-solid"/>
+				<Icon v-else name="heroicons:x-mark-16-solid"/>
             </ToggleButton> 
           </div>
         </div>

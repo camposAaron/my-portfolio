@@ -1,10 +1,11 @@
 <template>
   <section
+    id="hero"
     class="flex min-h-screen w-full flex-col items-center justify-center space-y-10 bg-gradient-to-r from-gray-900 via-indigo-950 to-gray-950 p-6 md:flex-row md:space-y-0 md:space-x-12"
   >
     <!-- Text Section -->
     <div class="max-w-xl text-left md:w-1/2">
-      <h1 class="animate-fade-in mb-4 text-3xl font-bold sm:text-4xl md:text-6xl">
+      <h1 id="greeting" class="animate-fade-in mb-4 text-3xl font-bold sm:text-4xl md:text-6xl">
         Hi, I'm <span class="text-cyan-400">Aaron Campos</span>
       </h1>
       <p class="animate-fade-in-slow text-base text-gray-400 sm:text-lg md:text-2xl">
@@ -27,7 +28,7 @@
       </div>
     </div>
 
-    <div class="flex w-full justify-center md:w-1/3">
+    <div id="cubeSlot" class="flex w-full justify-center md:w-1/3">
       <slot name="cube"></slot>
     </div>
   </section>
@@ -36,15 +37,25 @@
 import { gsap } from 'gsap'
 import { onMounted, ref } from 'vue'
 import NavLink from '../components/NavLink.vue'
-
 onMounted(() => {
-  gsap.from('.text-left', {
-    opacity: 0,
-    duration: 4,
-    ease: 'power2.out',
+  gsap.from('#greeting', {
+    opacity: 0.1,
+    y: 30,
+    duration: 3,
+    ease: 'elastic',
   })
-})
 
+  gsap.fromTo('.animate-fade-in-slow', {
+    opacity: 0.1,
+    duration: 1,
+    y:10
+  }, {
+    opacity: 1,
+    duration: 1 ,
+    y:0
+  })
+
+})
 const socialLinks = ref([
   {
     name: 'GitHub',

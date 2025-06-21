@@ -1,60 +1,40 @@
 <template>
   <section
     id="projects"
-    class="bg-gradient-to-l from-gray-900 via-indigo-950 to-gray-950 px-4 py-10 sm:px-6 md:py-20 lg:px-8"
+    class="bg-gradient-to-l from-gray-900 via-indigo-950 to-gray-950 px-6 pt-32 sm:px-8 lg:px-12"
   >
-    <div class="text-center">
+    <div class="text-center mb-16 sm:mb-20 lg:mb-24">
       <h2
-        class="animate-fade-in bg-gradient-to-b from-white to-gray-300 bg-clip-text text-3xl font-bold text-transparent md:text-4xl lg:text-5xl"
+        class="font-heading animate-fade-in bg-gradient-to-tr from-[#fcfdff] from-33% to-[#818dc0] to-100% bg-clip-text px-6 text-3xl font-bold text-transparent md:text-4xl lg:text-5xl"
       >
         Projects
       </h2>
-      <p
-        class="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-gray-400 sm:text-lg md:text-2xl"
-      >
+      <p class="font-body animate-fade-in mx-auto mt-4 max-w-2xl px-6 text-lg text-gray-300 md:text-xl lg:text-2xl">
         Here are some of the projects I've worked on.
       </p>
     </div>
+    
     <div class="relative flex min-h-screen flex-row">
-      <!--Project left bar-->
-      <div
-        id="projects-searcher"
-        class="fixed top-20 left-4 hidden w-48 rounded-lg bg-gray-900/50 p-4 backdrop-blur-sm transition-opacity duration-300 lg:block"
-        :class="{ 'opacity-0': !areProjectsVisible, 'opacity-100': areProjectsVisible }"
-      >
-        <ul class="space-y-2">
-          <li
-            class="cursor-pointer text-sm text-gray-300 transition-colors hover:text-cyan-300 md:text-base"
-          >
-            Autogestion
-          </li>
-          <li
-            class="cursor-pointer text-sm text-gray-300 transition-colors hover:text-cyan-300 md:text-base"
-          >
-            UCN Payroll System
-          </li>
-        </ul>
-      </div>
 
-      <!-- Project Container -->
       <div
-        class="relative grid min-h-screen grid-cols-1 gap-4 md:gap-6 lg:ms-[12em] lg:grid-cols-6 lg:gap-8"
+        class="relative grid min-h-screen grid-cols-1 gap-6 md:gap-8 lg:ms-[14rem] lg:grid-cols-6 lg:gap-12"
       >
-        <!-- Sticky Description -->
         <div
-          class="project-text sticky top-20 col-span-3 hidden h-[calc(100vh-8rem)] items-center lg:flex"
+          class="project-text sticky top-24 col-span-3 hidden h-[calc(100vh-10rem)] items-center lg:flex"
         >
-          <div class="px-2 text-left md:px-4">
-            <h3 class="mb-4 font-bold text-cyan-300 sm:text-2xl md:mb-6 lg:text-3xl">
+          <div class="px-4 text-left md:px-6">
+            <h3 class="font-heading mb-6 font-bold text-cyan-300 sm:text-2xl md:mb-8 lg:text-3xl">
               APS Autogestion
             </h3>
-            <p class="mb-4 text-sm leading-relaxed text-gray-400 sm:text-base md:mb-6 md:text-xl">
+            <p
+              class="font-body mb-6 text-sm leading-relaxed text-gray-400 sm:text-base md:mb-8 md:text-xl"
+            >
               <strong class="text-gray-300">Web System for Employee Self-Management</strong><br />
               A web platform that allows employees to manage their own payroll-related tasks and
               requests through a modern, centralized interface.
             </p>
             <ul
-              class="mb-4 list-inside list-disc space-y-1 text-sm text-gray-400 sm:text-base md:mb-6 md:space-y-2 md:text-lg"
+              class="mb-6 list-inside list-disc space-y-2 text-sm text-gray-400 sm:text-base md:mb-8 md:space-y-3 md:text-lg"
             >
               <li>Download payment receipts</li>
               <li>Request vacation or leave days</li>
@@ -69,18 +49,18 @@
         </div>
 
         <!-- Mobile Description (shown only on smaller screens) -->
-        <div class="mb-6 md:mb-8 lg:hidden">
-          <div class="px-2 text-left md:px-4">
-            <h3 class="mb-3 text-xl font-bold text-cyan-300 sm:text-2xl md:mb-4 md:text-3xl">
+        <div class="mb-8 md:mb-12 lg:hidden">
+          <div class="px-4 text-left md:px-6">
+            <h3 class="mb-4 text-xl font-bold text-cyan-300 sm:text-2xl md:mb-6 md:text-3xl">
               APS Autogestion
             </h3>
-            <p class="mb-3 text-sm leading-relaxed text-gray-400 sm:text-base md:mb-4 md:text-lg">
+            <p class="mb-4 text-sm leading-relaxed text-gray-400 sm:text-base md:mb-6 md:text-lg">
               <strong class="text-gray-300">Web System for Employee Self-Management</strong><br />
               A web platform that allows employees to manage their own payroll-related tasks and
               requests through a modern, centralized interface.
             </p>
             <ul
-              class="mb-3 list-inside list-disc space-y-1 text-sm text-gray-400 sm:text-base md:mb-4 md:space-y-2 md:text-lg"
+              class="mb-4 list-inside list-disc space-y-2 text-sm text-gray-400 sm:text-base md:mb-6 md:space-y-3 md:text-lg"
             >
               <li>Download payment receipts</li>
               <li>Request vacation or leave days</li>
@@ -95,39 +75,39 @@
         </div>
 
         <!-- Scrolling Images -->
-        <div class="col-span-3 lg:pt-[20vh]">
+        <div class="col-span-3 lg:pt-[24vh]">
           <!-- Mobile Slider -->
           <div class="relative lg:hidden">
             <div
-              class="image-slider -mx-2 flex snap-x snap-mandatory gap-3 overflow-x-auto px-2 pb-4 md:-mx-4 md:gap-4 md:px-4 md:pb-6"
+              class="image-slider -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-6 md:-mx-6 md:gap-6 md:px-6 md:pb-8"
             >
               <div
                 v-for="(image, index) in images"
                 :key="image.name"
-                class="project-image-item-mobile w-[85%] flex-none snap-center first:pl-2 last:pr-2 md:first:pl-4 md:last:pr-4"
+                class="project-image-item-mobile w-[85%] flex-none snap-center first:pl-4 last:pr-4 md:first:pl-6 md:last:pr-6"
               >
                 <ProjectImage :name="image.name" :image="image.src" @openDialog="openDialog" />
               </div>
             </div>
             <!-- Slider Dots -->
-            <div class="mt-3 mb-16 flex justify-center gap-2 md:mt-4 md:mb-20">
+            <div class="mt-6 mb-20 flex justify-center gap-3 md:mt-8 md:mb-24">
               <button
                 v-for="(image, index) in images"
                 :key="index"
                 @click="scrollToImage(index)"
-                class="h-2 w-2 rounded-full bg-gray-500 transition-colors"
-                :class="{ 'bg-cyan-300': currentImageIndex === index }"
+                class="h-3 w-3 rounded-full bg-gray-600 transition-all duration-200 hover:bg-gray-400"
+                :class="{ 'bg-cyan-300 scale-110': currentImageIndex === index }"
               ></button>
             </div>
           </div>
 
           <!-- Desktop Vertical Scroll -->
-          <div class="hidden space-y-16 md:space-y-20 lg:block">
+          <div class="hidden space-y-20 md:space-y-24 lg:block">
             <div
               v-for="(image, index) in images"
               :key="image.name"
               class="project-image-item"
-              :class="{ 'mb-[20vh]': index === images.length - 1 }"
+              :class="{ 'mb-[24vh]': index === images.length - 1 }"
               :ref="
                 (el) => {
                   if (el) projectRefs[index] = el
@@ -155,19 +135,19 @@
   <Transition name="fade">
     <div
       v-if="showDialog"
-      class="bg-opacity-80 fixed inset-0 z-50 flex items-center justify-center bg-black p-4"
+      class="bg-opacity-80 fixed inset-0 z-50 flex items-center justify-center bg-black p-6"
       @click.self="closeDialog"
     >
-      <div class="relative w-full max-w-3xl rounded-xl bg-gray-900 p-4">
+      <div class="relative w-full max-w-4xl rounded-2xl bg-gray-900 p-6">
         <button
-          class="absolute top-2 right-3 text-2xl text-white hover:text-red-400"
+          class="absolute top-4 right-4 text-3xl text-white hover:text-red-400 transition-colors duration-200"
           @click="closeDialog"
         >
           &times;
         </button>
         <video
           :src="selectedImage"
-          class="w-full rounded-lg"
+          class="w-full rounded-xl"
           autoplay
           loop
           muted

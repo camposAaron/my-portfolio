@@ -1,5 +1,5 @@
 <template>
-  <div class="relative group cursor-pointer overflow-hidden rounded-lg shadow-lg transition-transform duration-300 hover:scale-102 hover:shadow-2xl hover:shadow-cyan-600"
+  <div class="relative group cursor-pointer overflow-hidden rounded-lg shadow-lg transition-transform duration-300 hover:scale-102 hover:shadow-xl  md:hover:shadow-2xl hover:shadow-cyan-600"
       @click="handleClick">
       <video 
           :src="image" 

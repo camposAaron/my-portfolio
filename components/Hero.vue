@@ -5,24 +5,24 @@
   >
     <!-- Text Section -->
     <div class="max-w-xl text-left md:w-1/2">
-      <h1 id="greeting" class="animate-fade-in mb-4 text-3xl font-bold sm:text-4xl md:text-6xl">
+      <h1 id="greeting" class="font-heading animate-fade-in mb-4 text-3xl font-bold sm:text-4xl md:text-6xl">
         Hi, I'm <span class="text-cyan-400">Aaron Campos</span>
       </h1>
-      <p class="animate-fade-in-slow text-base text-gray-400 sm:text-lg md:text-2xl">
+      <p class="font-body animate-fade-in-slow text-base text-gray-400 sm:text-lg md:text-2xl">
         Software Engineer passionate about Cloud, Automation, and Building Reliable Systems.
       </p>
 
       <!-- Social Links -->
-      <div class="animate-fade-in-slow mt-8 flex flex-wrap gap-6">
+      <div class="animate-fade-in-slow mt-8 flex flex-wrap gap-2 sm:gap-4 md:gap-6">
         <NavLink
-          class="text-xl"
+          class="text-xl font-heading"
           v-for="link in socialLinks"
           :key="link.name"
           :text="link.name"
           :href="link.url"
         >
           <template #icon>
-            <Icon :name="link.icon" class="h-6 w-6 sm:h-7 sm:w-7" />
+            <Icon :name="link.icon" class="h-5 w-5 sm:h-7 sm:w-7" />
           </template>
         </NavLink>
       </div>

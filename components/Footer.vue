@@ -1,5 +1,5 @@
 <template>
-  <footer class="relative overflow-hidden h-30 bg-gray-900">
+  <footer class="font-heading relative overflow-hidden h-30 bg-gray-900">
     <div class="perspective-container">
       <div class="road-grid"></div>
       <div class="road-glow"></div>
@@ -8,7 +8,7 @@
     <!-- Footer Content -->
     <div class="absolute bottom-8 w-full text-center z-10">
       <div class="flex flex-row w-full justify-center  font-bold text-cyan-300 glow">
-        &copy;<Logo class="flex-shrink-0"/>
+        <Logo class="flex-shrink-0"/>&copy;
         <span>{{ new Date().getFullYear() }}</span>
       </div>
     </div>

@@ -1,20 +1,31 @@
 <template>
-  <section id="skills"
-    class="min-h-screen  pb-40 pt-20 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 text-gray-300 overflow-x-hidden">
-    <div class="text-center">
-      <h2 class="mt-5 text-3xl md:text-4xl font-bold animate-fade-in px-6">
+  <section
+    id="skills"
+    class="min-h-screen overflow-x-hidden bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 pt-40 pb-40 text-gray-300"
+  >
+    <div id="skill-container" class="relative text-center">
+      <h2
+        class="font-heading animate-fade-in mt-5 bg-gradient-to-tr from-[#fcfdff] from-33% to-[#818dc0] to-100% bg-clip-text px-6 text-3xl font-bold text-transparent md:text-4xl"
+      >
         Skills & Tools
       </h2>
-      <p class="mt-3 text-lg md:text-xl max-w-2xl mx-auto animate-fade-in px-6">
+      <p class="font-body animate-fade-in mx-auto mt-3 max-w-2xl px-6 text-lg md:text-xl">
         Some of the technologies and tools I work with regularly.
       </p>
       <div class="skills-container mt-16 md:mt-24">
         <div class="skills-track">
-          <div v-for="(skill, index) in isMobile ?  repeatedSkills : skills" :key="index" class="skill-card group">
+          <div
+            v-for="(skill, index) in isMobile ? repeatedSkills : skills"
+            :key="index"
+            class="skill-card group"
+          >
             <div class="skill-card-face">
-              <img :src="skill.icon" :alt="skill.name"
-                class="h-14 w-14 transition-transform duration-300 group-hover:filter-glow" />
-              <span class="font-medium mt-3 text-sm md:text-base text-gray-300">
+              <img
+                :src="skill.icon"
+                :alt="skill.name"
+                class="group-hover:filter-glow h-14 w-14 transition-transform duration-300"
+              />
+              <span class="font-heading mt-3 text-sm font-medium text-gray-300 md:text-base">
                 {{ skill.name }}
               </span>
             </div>
@@ -26,35 +37,73 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue"
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { gsap } from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
 
+gsap.registerPlugin(ScrollTrigger)
 const isMobile = ref(false)
 
 onMounted(() => {
   isMobile.value = window.innerWidth < 768
-  
+
   // Add resize listener to update isMobile when window size changes
-  window.addEventListener('resize', () => {
+  const handleResize = () => {
     isMobile.value = window.innerWidth < 768
+  }
+  
+  window.addEventListener('resize', handleResize)
+
+  nextTick(() => {
+    // Clear any existing ScrollTriggers first
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+    
+    const skillsSection = document.querySelector('#skills')
+    
+    if (skillsSection) {
+      gsap.from('#skill-container', {
+        opacity: 0,
+        y: 50,
+        duration: 2,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: skillsSection,
+          start: 'top 80%',
+          end: 'bottom 20%',
+          toggleActions: 'play none none reverse',
+          markers: false,
+        },
+      })
+    }
   })
 })
 
-const icons = import.meta.glob("../public/skills/*.svg", {
-  eager: true,
-  as: "url",
+onUnmounted(() => {
+  // Clean up ScrollTriggers when component is unmounted
+  ScrollTrigger.getAll().forEach(trigger => trigger.kill())
 })
 
-const skills = ref(Object.entries(icons).map(([path, url]) => {
-  const fileName = path.split("/").pop().replace(".svg", "").replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-  return { name: fileName, icon: url }
-}))
+const icons = import.meta.glob('../public/skills/*.svg', {
+  eager: true,
+  as: 'url',
+})
 
+const skills = ref(
+  Object.entries(icons).map(([path, url]) => {
+    const fileName = path
+      .split('/')
+      .pop()
+      .replace('.svg', '')
+      .replace(/-/g, ' ')
+      .replace(/\b\w/g, (l) => l.toUpperCase())
+    return { name: fileName, icon: url }
+  }),
+)
 
-const repeatedSkills = computed(() => [...skills.value, ...skills.value]);
+const repeatedSkills = computed(() => [...skills.value, ...skills.value])
 </script>
 
 <style scoped>
-
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -133,7 +182,6 @@ const repeatedSkills = computed(() => [...skills.value, ...skills.value]);
 /* --- Desktop Styles: 3D Isometric Grid (Applied on screens 768px and wider) --- */
 
 @media (min-width: 768px) {
-
   /* Remove mobile-specific container styles */
   .skills-container {
     -webkit-mask-image: none;
@@ -161,7 +209,7 @@ const repeatedSkills = computed(() => [...skills.value, ...skills.value]);
       width: 35%;
       grid-template-columns: repeat(5, 1fr);
       margin: 0px auto;
-      padding:0;
+      padding: 0;
     }
   }
 

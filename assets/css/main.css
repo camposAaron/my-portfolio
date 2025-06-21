@@ -1,41 +1,20 @@
 @import "tailwindcss";
 
-:root {
+@theme {
     --font-heading: 'Space Grotesk', sans-serif;
     --font-body: 'Inter', sans-serif;
-}
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-family: var(--font-heading);
-    font-weight: 600; 
-}
 
-body,
-p,
-li,
-span {
-    font-family: var(--font-body);
-    font-weight: 400; 
-}
+    --animate-carousel: carousel-scroll 40s linear infinite;
+    
+    @keyframes carousel-scroll {
+        from {
+            transform: translateX(0);
+        }
 
-nav a {
-    font-family: var(--font-heading);
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    color: #ffffff;
-    text-decoration: none;
-    transition: color 0.3s;
-}
-
-nav a:hover {
-    color: #00ffff;
-}
-
-html {
-    scroll-behavior: smooth;
+        to {
+            /* Moves the track left by the width of the original set of items */
+            transform: translateX(-50%);
+        }
+    }
 }

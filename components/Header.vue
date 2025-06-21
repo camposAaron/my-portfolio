@@ -1,100 +1,80 @@
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from "vue"
-const isScrolled = ref(false)
+import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
+
 const mobileMenuOpen = ref(false)
-const isDarkMode = ref(false) 
-
-// Scroll handling
-const handleScroll = () => {
-	isScrolled.value = window.scrollY > 20 // Trigger scroll effect slightly earlier
-}
-
+const isShortMobile = computed(() => window.innerHeight < 600)
 const navLinks = ref([
-    { href: "#about", text: "About" },
-    { href: "#skills", text: "Skills" },
-    { href: "#projects", text: "Projects" },
-    { href: "#contact", text: "Contact" },
+  { href: '#about', text: 'About' },
+  { href: '#skills', text: 'Skills' },
+  { href: '#projects', text: 'Projects' },
+  { href: '#contact', text: 'Contact' },
 ])
 
-// Dark mode handling
-const checkDarkModePreference = () => {
-	// Check local storage first, then system preference
-	if (
-		localStorage.theme === "dark" ||
-		(!("theme" in localStorage) &&
-			window.matchMedia("(prefers-color-scheme: dark)").matches)
-	) {
-		document.documentElement.classList.add("dark") // Use documentElement for Tailwind 'class' strategy
-		isDarkMode.value = true
-		localStorage.setItem("theme", "dark") // Explicitly set storage if using system preference initially
-	} else {
-		document.documentElement.classList.remove("dark")
-		isDarkMode.value = false
-		localStorage.setItem("theme", "light")
-	}
-}
-
-const toggleDarkMode = () => {
-	if (isDarkMode.value) {
-		document.documentElement.classList.remove("dark")
-		localStorage.theme = "light"
-		isDarkMode.value = false
-	} else {
-		document.documentElement.classList.add("dark")
-		localStorage.theme = "dark"
-		isDarkMode.value = true
-	}
-}
-
 onMounted(() => {
-	window.addEventListener("scroll", handleScroll)
-	checkDarkModePreference() // Check dark mode on mount
-
-	window
-		.matchMedia("(prefers-color-scheme: dark)")
-		.addEventListener("change", checkDarkModePreference)
+  nextTick(() => {
+    gsap.to('header', {
+      width: '80%',
+      top: '20',
+      borderRadius: '20px',
+      ease: 'power2.inOut',
+      scrollTrigger: {
+        trigger: 'header',
+        start: 'top top',
+        end: 'bottom top',
+        toggleActions: 'play none none reverse',
+        markers: true,
+      },
+    })
+  })
 })
 
-onUnmounted(() => {
-	window.removeEventListener("scroll", handleScroll)
-	// Optional: Clean up system preference listener
-	window
-		.matchMedia("(prefers-color-scheme: dark)")
-		.removeEventListener("change", checkDarkModePreference)
-})
-</script>
-  
-  <style scoped>
-  header {
-    transition-property: background-color, box-shadow, height, border-color; /* Include height and border */
+function scrollToSection(href) {
+  const id = href.replace('#', '')
+  const el = document.getElementById(id)
+  if (el) {
+    if (id === 'about') {
+      console.log('isShortMobile:', isShortMobile.value)
+      el.scrollIntoView({ behavior: 'smooth', block: !isShortMobile ? 'start' : 'end' })
+    } else {
+      el.scrollIntoView({ behavior: 'smooth' })
+    }
   }
-  </style>
+}
+</script>
+
+<style scoped>
+header {
+  transition-property:
+    background-color, box-shadow, height, border-color; /* Include height and border */
+}
+</style>
 <template>
-    <header
-      class="sticky top-0 z-50 w-full transition-all duration-300 ease-in-out"
-      :class="[
-        isScrolled
-          ? ' dark:bg-gray-900 shadow-md h-16' // Scrolled state: slightly darker, shadow, standard height
-          : ' dark:bg-gray-900 h-20', // Initial state: slightly taller
-        'border-b border-gray-500 dark:border-gray-700' // Consistent bottom border
-      ]"
-    >
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-full">
-        <Logo class="flex-shrink-0 text-xl"/>
-        <NavMenu class="text-sm not-[]:hidden md:flex space-x-6 lg:space-x-8 items-center" :navLinks="navLinks"/>  
-        <div class="flex items-center space-x-4">
-          <ToggleButton :aria-label="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'" @toggle="toggleDarkMode">
-			<Icon v-if="isDarkMode" name="heroicons:moon-20-solid"/>
-			<Icon v-else name="heroicons:sun-20-solid"/>
+  <header
+    class="font-heading sticky top-0 z-50 m-auto h-16 w-full border-b border-gray-900 bg-gray-900 shadow-md transition-all duration-300 ease-in-out"
+  >
+    <div class="container mx-auto flex h-full items-center justify-between px-4 sm:px-6 lg:px-8">
+      <Logo class="flex-shrink-0 text-xl" />
+      <NavMenu
+        class="not-[]:hidden items-center space-x-6 text-[12pt] font-semibold md:flex lg:space-x-8"
+        :navLinks="navLinks"
+        :scrollToSection="scrollToSection"
+      />
+      <div class="flex items-center space-x-4">
+        <div class="md:hidden">
+          <ToggleButton aria-label="Toggle mobile menu" @toggle="mobileMenuOpen = !mobileMenuOpen">
+            <Icon v-if="!mobileMenuOpen" name="heroicons:bars-3-bottom-left-16-solid" />
+            <Icon v-else name="heroicons:x-mark-16-solid" />
           </ToggleButton>
-          <div class="md:hidden">
-            <ToggleButton aria-label="Toggle mobile menu" @toggle="mobileMenuOpen = !mobileMenuOpen">
-				<Icon v-if="!mobileMenuOpen" name="heroicons:bars-3-bottom-left-16-solid"/>
-				<Icon v-else name="heroicons:x-mark-16-solid"/>
-            </ToggleButton> 
-          </div>
         </div>
       </div>
-      <MobileMenu :mobileMenuOpen="mobileMenuOpen" :navLinks="navLinks"/>
-    </header>
-  </template>
+    </div>
+    <MobileMenu
+      v-model:mobileMenuOpen="mobileMenuOpen"
+      :navLinks="navLinks"
+      :scrollToSection="scrollToSection"
+    />
+  </header>
+</template>

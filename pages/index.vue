@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen w-full bg-gray-950 text-white">
+    <div class="min-h-screen w-full">
         <Hero>
             <template #cube>
                 <Cube />

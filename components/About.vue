@@ -6,15 +6,16 @@
     <div
       class="flex flex-col items-center gap-12 px-4 sm:px-6 md:flex-row md:gap-16 lg:gap-20 lg:px-8"
     >
-      <Picture class="picture-about"></Picture>
+      <Picture class="picture-about  shadow-[0_0_15px_rgba(34,211,238,0.5)"></Picture>
       <div class="animate-fade-in-on-scroll-delay max-w-3xl text-center md:text-left">
         <h2
           id="about-heading"
-          class="font-heading mb-6 bg-gradient-to-b from-white to-gray-300 bg-clip-text text-3xl font-bold text-transparent sm:text-4xl lg:text-5xl dark:text-slate-100"
+          class="font-heading mb-6 text-3xl font-bold sm:text-4xl lg:text-5xl text-transparent bg-clip-text bg-gradient-to-tr from-[#fcfdff] from-33%  to-[#818dc0] to-100%"
         >
           About Me
         </h2>
-        <p id="about-desc"
+        <p
+          id="about-desc"
           class="font-body mb-8 text-lg leading-relaxed text-slate-400 sm:text-xl dark:text-slate-400"
         >
           I'm a passionate developer transitioning into the world of DevOps. With a background in
@@ -25,7 +26,7 @@
         <a
           href="#projects"
           id="projects-button"
-          class="inline-block rounded-md bg-cyan-600 px-6 py-3 text-base font-medium text-white shadow-sm transition duration-150 ease-in-out hover:bg-cyan-700 focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-900 focus:outline-none dark:bg-cyan-600 dark:hover:bg-cyan-700 dark:focus:ring-offset-gray-900"
+          class="inline-block rounded-md bg-cyan-600 px-6 py-3 text-base font-medium text-white shadow-[0_0_15px_rgba(34,211,238,0.5)] transition duration-150 ease-in-out hover:bg-cyan-600 hover:shadow-[0_0_20px_rgba(34,211,238,0.7)] focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-900 focus:outline-none"
         >
           View My Projects
         </a>
@@ -45,57 +46,72 @@ let tl = null
 
 onMounted(() => {
   nextTick(() => {
-    tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: '#about',
-        start: 'top 80%',
-        end: 'bottom 20%',
-        toggleActions: 'play none none reverse',
-        // Remove markers in production
-        markers: false,
-      },
-    })
-
-    tl.from('.picture-about', {
-      opacity: 0,
-      x: -50,
-      duration: 1,
-      ease: 'power2.out',
-    })
-
-    tl.from(
-      '#about-heading',
-      {
+    // Clear any existing ScrollTriggers first
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+    
+    const aboutSection = document.querySelector('#about')
+    
+    if (aboutSection) {
+      // Set initial states
+      gsap.set(['.picture-about', '#about-heading', '#about-desc', '#projects-button'], {
         opacity: 0,
-        y: 50,
+        y: 30
+      })
+      
+      // Create main timeline
+      tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: aboutSection,
+          start: 'top 80%',
+          end: 'bottom 20%',
+          toggleActions: 'play none none reverse',
+          markers: false,
+        },
+      })
+
+      // Animate picture
+      tl.to('.picture-about', {
+        opacity: 1,
+        x: 0,
         duration: 1,
         ease: 'power2.out',
-      },
-      '-=0.5',
-    )
+      })
 
-    gsap.from(['#projects-button', '#about-desc'], {
-      scrollTrigger:{
-        trigger: '#about',
-        start: 'top 90%',
-        end: 'bottom 20%',
-        toggleActions: 'play none none reverse',
-        markers: true
-      },
-      opacity: 0.1,
-      duration: 1.5,
-      x: 30
-    })
+      // Animate heading
+      tl.to('#about-heading', {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power2.out',
+      }, '-=0.5')
 
+      // Animate description and button together
+      tl.to(['#about-desc', '#projects-button'], {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power2.out',
+      }, '-=0.3')
+    }
   })
 })
 
 onUnmounted(() => {
+  // Clean up timeline and ScrollTriggers
   if (tl) {
     tl.kill()
   }
-  ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+  ScrollTrigger.getAll().forEach(trigger => trigger.kill())
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+/* Ensure elements are visible by default */
+.picture-about,
+#about-heading,
+#about-desc,
+#projects-button {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>

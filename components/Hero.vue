@@ -34,43 +34,49 @@
   </section>
 </template>
 <script setup>
-import { gsap } from 'gsap'
-import { onMounted, ref } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 import NavLink from '../components/NavLink.vue'
+
+const { $gsap: gsap } = useNuxtApp()
+
+let animations = []
+
 onMounted(() => {
-  gsap.from('#greeting', {
-    opacity: 0.1,
-    y: 30,
-    duration: 3,
-    ease: 'elastic',
-  })
+  if (gsap) {
+    const greetingAnim = gsap.from('#greeting', {
+      opacity: 0.1,
+      y: 30,
+      duration: 3,
+      ease: 'elastic',
+    })
 
-  gsap.fromTo('.animate-fade-in-slow', {
-    opacity: 0.1,
-    duration: 1,
-    y:10
-  }, {
-    opacity: 1,
-    duration: 1 ,
-    y:0
-  })
+    const fadeAnim = gsap.fromTo('.animate-fade-in-slow', {
+      opacity: 0.1,
+      duration: 1,
+      y: 10
+    }, {
+      opacity: 1,
+      duration: 1,
+      y: 0
+    })
 
+    animations = [greetingAnim, fadeAnim]
+  }
 })
-const socialLinks = ref([
-  {
-    name: 'GitHub',
-    url: 'https://github.com/camposAaron',
-    icon: 'entypo-social:github',
-  },
-  {
-    name: 'LinkedIn',
-    url: 'https://www.linkedin.com/in/josu%C3%A9-aaron-campos-a585371a8/',
-    icon: 'entypo-social:linkedin',
-  },
-  {
-    name: 'Resume',
-    url: '/resume.pdf',
-    icon: 'heroicons:document-arrow-down-solid',
-  },
-])
+
+onUnmounted(() => {
+  // Clean up animations
+  animations.forEach(anim => {
+    if (anim) {
+      anim.kill()
+    }
+  })
+  animations = []
+})
+
+const socialLinks = [
+  { name: 'GitHub', url: 'https://github.com/camposAaron', icon: 'entypo-social:github' },
+  { name: 'LinkedIn', url: 'https://www.linkedin.com/in/josu%C3%A9-aaron-campos-a585371a8/', icon: 'entypo-social:linkedin' },
+  { name: 'Resume', url: '/resume.pdf', icon: 'heroicons:document-arrow-down-solid' },
+]
 </script>

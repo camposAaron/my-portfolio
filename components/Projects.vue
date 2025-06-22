@@ -162,9 +162,8 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import Lenis from 'lenis'
-import { gsap } from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
-gsap.registerPlugin(ScrollTrigger)
+
+const { $gsap: gsap, $ScrollTrigger: ScrollTrigger } = useNuxtApp()
 
 const showDialog = ref(false)
 const selectedImage = ref('')
@@ -174,6 +173,7 @@ const rafId = ref(null)
 const projectRefs = ref([])
 const videoRefs = ref([])
 const areProjectsVisible = ref(false)
+let scrollTriggers = []
 
 function openDialog(image) {
   selectedImage.value = image
@@ -228,9 +228,10 @@ function initLenis() {
 
 function setupAnimations() {
   // Clear any existing ScrollTriggers
-  ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+  scrollTriggers.forEach(trigger => trigger.kill())
+  scrollTriggers = []
 
-  if (!isMobile.value) {
+  if (!isMobile.value && gsap && ScrollTrigger) {
     // Initialize Lenis only on desktop
     if (!lenis.value) {
       initLenis()
@@ -238,9 +239,6 @@ function setupAnimations() {
 
     // Desktop animations
     const images = gsap.utils.toArray('.project-image-item')
-
-    // Set initial state
-    // $gsap.set(images, { opacity: 0, y: 0 })
 
     images.forEach((image, index) => {
       // Create a timeline for each images
@@ -298,6 +296,11 @@ function setupAnimations() {
           },
         },
       })
+      
+      // Store ScrollTrigger for cleanup
+      if (tl.scrollTrigger) {
+        scrollTriggers.push(tl.scrollTrigger)
+      }
     })
   } else {
     // Cleanup Lenis on mobile
@@ -311,13 +314,15 @@ function setupAnimations() {
     }
 
     // Reset all images to visible state on mobile
-    gsap.utils.toArray('.project-image-item').forEach((image) => {
-      gsap.set(image, {
-        clearProps: 'all',
-        opacity: 1,
-        x: 0,
+    if (gsap) {
+      gsap.utils.toArray('.project-image-item').forEach((image) => {
+        gsap.set(image, {
+          clearProps: 'all',
+          opacity: 1,
+          x: 0,
+        })
       })
-    })
+    }
   }
 }
 
@@ -369,7 +374,9 @@ onUnmounted(() => {
     cancelAnimationFrame(rafId.value)
     rafId.value = null
   }
-  ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+  // Clean up ScrollTriggers
+  scrollTriggers.forEach(trigger => trigger.kill())
+  scrollTriggers = []
 })
 
 const images = [

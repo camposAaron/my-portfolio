@@ -32,7 +32,9 @@
 
 <script setup>
 import { ref, computed, onUnmounted, onMounted } from "vue"
-import { gsap } from "gsap"
+
+const { $gsap: gsap } = useNuxtApp()
+
 const codeClass = "typing-effect text-sm/6"
 const preClass =
 	"overflow-hidden whitespace-pre-wrap text-left text-sm/6 font-mono text-gray-300"
@@ -53,6 +55,7 @@ const isIdle = ref(true)
 const startX = ref(0)
 const startY = ref(0)
 let returnTimeoutId = null
+let animations = []
 
 // --- Computed Styles ---
 // Style for the inner cube (handles drag/return transform and transition)
@@ -134,23 +137,27 @@ const handleMouseUp = () => {
 }
 
 onMounted(() => {
-	const faces = document.querySelectorAll(".face")
-	gsap.to(faces, {
-		color: "white",
-		textShadow: "none",
-		boxShadow: "0 0 20px rgba(255, 255, 255, 0.2)",
-		border: "1px solid rgba(255, 255, 255, 0.1)",
-		repeat: -1,
-		duration: 6,
-		yoyo: true,
-	})
+	if (gsap) {
+		const faces = document.querySelectorAll(".face")
+		const facesAnim = gsap.to(faces, {
+			color: "white",
+			textShadow: "none",
+			boxShadow: "0 0 20px rgba(255, 255, 255, 0.2)",
+			border: "1px solid rgba(255, 255, 255, 0.1)",
+			repeat: -1,
+			duration: 6,
+			yoyo: true,
+		})
 
-	gsap.from(".cube-container", {
-		y: -30,
-		opacity: 0.2,
-		duration: 1,
-		ease: "power2.out",
-	})
+		const containerAnim = gsap.from(".cube-container", {
+			y: -30,
+			opacity: 0.2,
+			duration: 1,
+			ease: "power2.out",
+		})
+
+		animations = [facesAnim, containerAnim]
+	}
 })
 
 // --- Cleanup ---
@@ -161,6 +168,13 @@ onUnmounted(() => {
 	if (returnTimeoutId) {
 		clearTimeout(returnTimeoutId)
 	}
+	// Clean up animations
+	animations.forEach(anim => {
+		if (anim) {
+			anim.kill()
+		}
+	})
+	animations = []
 })
 </script>
 

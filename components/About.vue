@@ -37,25 +37,21 @@
 <script setup>
 import { onMounted, onUnmounted, nextTick } from 'vue'
 import Picture from '../components/Picture.vue'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-gsap.registerPlugin(ScrollTrigger)
+const { $gsap: gsap, $ScrollTrigger: ScrollTrigger } = useNuxtApp()
 
 let tl = null
+let scrollTrigger = null
 
-onMounted(() => {
-  nextTick(() => {
-    // Clear any existing ScrollTriggers first
-    ScrollTrigger.getAll().forEach(trigger => trigger.kill())
-    
+onMounted(async () => {
+  await nextTick()
+  
+  if (gsap && ScrollTrigger) {
     const aboutSection = document.querySelector('#about')
     
     if (aboutSection) {
-      // Set initial states
       gsap.set(['.picture-about', '#about-heading', '#about-desc', '#projects-button'], {
-        opacity: 0,
-        y: 30
+        opacity: 0
       })
       
       // Create main timeline
@@ -69,19 +65,22 @@ onMounted(() => {
         },
       })
 
+      // Store ScrollTrigger instance for cleanup
+      scrollTrigger = tl.scrollTrigger
+
       // Animate picture
       tl.to('.picture-about', {
         opacity: 1,
-        x: 0,
-        duration: 1,
+        x: -30,
+        duration: 0.3,
         ease: 'power2.out',
       })
 
       // Animate heading
       tl.to('#about-heading', {
         opacity: 1,
-        y: 0,
-        duration: 1,
+        y: -9,
+        duration: 0.4,
         ease: 'power2.out',
       }, '-=0.5')
 
@@ -89,19 +88,23 @@ onMounted(() => {
       tl.to(['#about-desc', '#projects-button'], {
         opacity: 1,
         y: 0,
-        duration: 1,
+        duration: 0.3,
         ease: 'power2.out',
       }, '-=0.3')
     }
-  })
+  }
 })
 
 onUnmounted(() => {
-  // Clean up timeline and ScrollTriggers
+  // Clean up timeline and ScrollTrigger
+  if (scrollTrigger) {
+    scrollTrigger.kill()
+    scrollTrigger = null
+  }
   if (tl) {
     tl.kill()
+    tl = null
   }
-  ScrollTrigger.getAll().forEach(trigger => trigger.kill())
 })
 </script>
 

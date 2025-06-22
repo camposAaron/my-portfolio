@@ -1,8 +1,8 @@
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-gsap.registerPlugin(ScrollTrigger)
+import { ref, onMounted, onUnmounted, computed, nextTick } from 'vue'
+import { useNuxtApp } from '#app'
+
+const { $gsap: gsap, $ScrollTrigger: ScrollTrigger } = useNuxtApp()
 
 const mobileMenuOpen = ref(false)
 const isShortMobile = computed(() => window.innerHeight < 600)
@@ -13,22 +13,57 @@ const navLinks = ref([
   { href: '#contact', text: 'Contact' },
 ])
 
-onMounted(() => {
-  nextTick(() => {
-    gsap.to('header', {
+const headerRef = ref(null)
+let headerScrollTrigger = null
+let animation = null
+
+onMounted(async () => {
+  await nextTick()
+  
+  if (gsap && ScrollTrigger && headerRef.value) {
+    // Kill any existing ScrollTriggers for this element
+    ScrollTrigger.getAll().forEach(trigger => {
+      if (trigger.vars.trigger === headerRef.value) {
+        trigger.kill()
+      }
+    })
+
+    animation = gsap.to(headerRef.value, {
       width: '80%',
-      top: '20',
+      top: '20px',
       borderRadius: '20px',
+      duration: 0.3,
       ease: 'power2.inOut',
+      backdropFilter: 'blur(10px)',
+      backgroundColor: 'rgba(17, 24, 39, 0.8)',
+      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
       scrollTrigger: {
-        trigger: 'header',
+        trigger: headerRef.value,
         start: 'top top',
         end: 'bottom top',
         toggleActions: 'play none none reverse',
-        markers: true,
+        markers: process.NODE_ENV === 'development' ?  true : false,
       },
     })
-  })
+    
+    // Store the ScrollTrigger instance for cleanup
+    headerScrollTrigger = animation.scrollTrigger
+    
+    // Refresh ScrollTrigger to ensure proper positioning
+    ScrollTrigger.refresh()
+  }
+})
+
+onUnmounted(() => {
+  // Kill only the header's ScrollTrigger instance
+  if (headerScrollTrigger) {
+    headerScrollTrigger.kill()
+    headerScrollTrigger = null
+  }
+  if (animation) {
+    animation.kill()
+    animation = null
+  }
 })
 
 function scrollToSection(href) {
@@ -47,12 +82,12 @@ function scrollToSection(href) {
 
 <style scoped>
 header {
-  transition-property:
-    background-color, box-shadow, height, border-color; /* Include height and border */
+  transition-property: background-color, box-shadow, height, border-color; /* Include height and border */
 }
 </style>
 <template>
   <header
+    ref="headerRef"
     class="font-heading sticky top-0 z-50 m-auto h-16 w-full border-b border-gray-900 bg-gray-900 shadow-md transition-all duration-300 ease-in-out"
   >
     <div class="container mx-auto flex h-full items-center justify-between px-4 sm:px-6 lg:px-8">

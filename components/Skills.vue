@@ -1,7 +1,7 @@
 <template>
   <section
     id="skills"
-    class="min-h-screen overflow-x-hidden bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 pt-40 pb-40 text-gray-300"
+    class="overflow-x-hidden bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 pt-30 pb-40 text-gray-300"
   >
     <div id="skill-container" class="relative text-center">
       <h2
@@ -38,13 +38,14 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
-import { gsap } from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
 
-gsap.registerPlugin(ScrollTrigger)
+const { $gsap: gsap, $ScrollTrigger: ScrollTrigger } = useNuxtApp()
+
 const isMobile = ref(false)
+let scrollTrigger = null
+let animation = null
 
-onMounted(() => {
+onMounted(async () => {
   isMobile.value = window.innerWidth < 768
 
   // Add resize listener to update isMobile when window size changes
@@ -54,14 +55,13 @@ onMounted(() => {
   
   window.addEventListener('resize', handleResize)
 
-  nextTick(() => {
-    // Clear any existing ScrollTriggers first
-    ScrollTrigger.getAll().forEach(trigger => trigger.kill())
-    
+  await nextTick()
+  
+  if (gsap && ScrollTrigger) {
     const skillsSection = document.querySelector('#skills')
     
     if (skillsSection) {
-      gsap.from('#skill-container', {
+      animation = gsap.from('#skill-container', {
         opacity: 0,
         y: 50,
         duration: 2,
@@ -74,13 +74,23 @@ onMounted(() => {
           markers: false,
         },
       })
+      
+      // Store ScrollTrigger instance for cleanup
+      scrollTrigger = animation.scrollTrigger
     }
-  })
+  }
 })
 
 onUnmounted(() => {
-  // Clean up ScrollTriggers when component is unmounted
-  ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+  // Clean up ScrollTrigger when component is unmounted
+  if (scrollTrigger) {
+    scrollTrigger.kill()
+    scrollTrigger = null
+  }
+  if (animation) {
+    animation.kill()
+    animation = null
+  }
 })
 
 const icons = import.meta.glob('../public/skills/*.svg', {

@@ -54,6 +54,9 @@ importers:
       '@iconify-json/heroicons':
         specifier: ^1.2.2
         version: 1.2.2
+      '@iconify-json/skill-icons':
+        specifier: ^1.2.0
+        version: 1.2.0
       prettier:
         specifier: ^3.5.3
         version: 3.5.3
@@ -378,6 +381,9 @@ packages:
 
   '@iconify-json/heroicons@1.2.2':
     resolution: {integrity: sha512-qoW4pXr5kTTL6juEjgTs83OJIwpePu7q1tdtKVEdj+i0zyyVHgg/dd9grsXJQnpTpBt6/VwNjrXBvFjRsKPENg==}
+
+  '@iconify-json/skill-icons@1.2.0':
+    resolution: {integrity: sha512-5zlPrzF5pelV1wut7C88zmAiYONvGxvFw11dXW1Pr1oIhUOtYhC7x3zkErSTFkyZ3m5fEgcEUrcO1W3UhNJVpw==}
 
   '@iconify/collections@1.0.558':
     resolution: {integrity: sha512-4ACVK6+8PksNTe3tVa1FJ2vcy/m9hx9dsjq8aVblWD2wAbGNqr2tVmxnm6EnKX0PON9BrrGy+U3GrqzJUSkJuw==}
@@ -4303,6 +4309,10 @@ snapshots:
       '@iconify/types': 2.0.0
 
   '@iconify-json/heroicons@1.2.2':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/skill-icons@1.2.0':
     dependencies:
       '@iconify/types': 2.0.0
 

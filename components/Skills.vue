@@ -20,11 +20,7 @@
             class="skill-card group"
           >
             <div class="skill-card-face">
-              <img
-                :src="skill.icon"
-                :alt="skill.name"
-                class="group-hover:filter-glow h-14 w-14 transition-transform duration-300"
-              />
+              <Icon :name="skill.icon" size="20rem" />
               <span class="font-heading mt-3 text-sm font-medium text-gray-300 md:text-base">
                 {{ skill.name }}
               </span>
@@ -68,10 +64,10 @@ onMounted(async () => {
         ease: 'power2.out',
         scrollTrigger: {
           trigger: skillsSection,
-          start: 'top 80%',
-          end: 'bottom 20%',
+          start: '20% 80%',
+          end: 'bottom 30%',
           toggleActions: 'play none none reverse',
-          markers: false,
+          markers: true,
         },
       })
       
@@ -93,22 +89,25 @@ onUnmounted(() => {
   }
 })
 
-const icons = import.meta.glob('../public/skills/*.svg', {
-  eager: true,
-  as: 'url',
-})
 
-const skills = ref(
-  Object.entries(icons).map(([path, url]) => {
-    const fileName = path
-      .split('/')
-      .pop()
-      .replace('.svg', '')
-      .replace(/-/g, ' ')
-      .replace(/\b\w/g, (l) => l.toUpperCase())
-    return { name: fileName, icon: url }
-  }),
-)
+const skills = ref([
+  { name: 'JavaScript', icon: 'skill-icons:javascript' },
+  { name: 'Vue.js', icon: 'skill-icons:vuejs-dark' },
+  { name: 'Angular', icon: 'skill-icons:angular-dark' },
+  { name: 'React', icon: 'skill-icons:react-dark' },
+  { name: 'NestJS', icon: 'skill-icons:nestjs-dark' },
+  { name: 'Node.js', icon: 'skill-icons:nodejs-dark' },
+  { name: 'Tailwind CSS', icon: 'skill-icons:tailwindcss-dark' },
+  { name: 'Git', icon: 'skill-icons:git' },
+  { name: 'Docker', icon: 'skill-icons:docker' },
+  { name: 'Kubernetes', icon: 'skill-icons:kubernetes' },
+  { name: 'TypeScript', icon: 'skill-icons:typescript' },
+  { name: 'PostgreSQL', icon: 'skill-icons:postgresql-dark' },
+  { name: 'AWS', icon: 'skill-icons:aws-dark' },
+  { name: 'Python', icon: 'skill-icons:python-dark' },
+  { name: 'Supabase', icon: 'skill-icons:supabase-dark' },
+
+])
 
 const repeatedSkills = computed(() => [...skills.value, ...skills.value])
 </script>

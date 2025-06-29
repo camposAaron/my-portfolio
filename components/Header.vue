@@ -50,10 +50,8 @@ onMounted(async () => {
       },
     })
     
-    // Store the ScrollTrigger instance for cleanup
     headerScrollTrigger = animation.scrollTrigger
     
-    // Refresh ScrollTrigger to ensure proper positioning
     ScrollTrigger.refresh()
   }
 })
@@ -74,9 +72,6 @@ function scrollToSection(href) {
   const id = href.replace('#', '')
   const el = document.getElementById(id)
   if (el) {
-    console.log('HERREEEE')
-      // Fallback to native smooth scrolling if Lenis is not available
-      console.log('Using native scrollIntoView')
       if (id === 'about') {
         el.scrollIntoView({ behavior: 'smooth', block: !isShortMobile.value ? 'start' : 'end' })
       } else {

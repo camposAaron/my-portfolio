@@ -1,6 +1,7 @@
 import tailwindcss from "@tailwindcss/vite"
 
 export default defineNuxtConfig({
+  ssr: false,
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
   modules: [
@@ -15,8 +16,12 @@ export default defineNuxtConfig({
   },
   app: {
     head:{ 
-      title: "<aaronDev/>"
-    }
+      title: "</AaronDev>",
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/icon.png' },
+      ]
+    },
+    
   },
   googleFonts: {
     display: 'swap',
@@ -31,5 +36,13 @@ export default defineNuxtConfig({
   },
   icon:{
     mode: 'svg'
+  },
+  runtimeConfig: {
+     awsAccessKeyId: process.env.AWS_ACCESS_KEY_ID,
+     awsSecretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+     awsRegion: process.env.AWS_REGION,
+     contactFormReceiverEmail: process.env.CONTACT_FORM_RECEIVER_EMAIL,
+     cvBucketName: process.env.CV_BUCKET_NAME,
+     cvFileName: process.env.CV_FILE_NAME,
   }
 })

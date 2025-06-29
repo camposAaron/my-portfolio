@@ -1,37 +1,3 @@
-<template>
-  <section
-    id="skills"
-    class="overflow-x-hidden bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 pt-30 pb-40 text-gray-300"
-  >
-    <div id="skill-container" class="relative text-center">
-      <h2
-        class="font-heading animate-fade-in mt-5 bg-gradient-to-tr from-[#fcfdff] from-33% to-[#818dc0] to-100% bg-clip-text px-6 text-3xl font-bold text-transparent md:text-4xl"
-      >
-        Skills & Tools
-      </h2>
-      <p class="font-body animate-fade-in mx-auto mt-3 max-w-2xl px-6 text-lg md:text-xl">
-        Some of the technologies and tools I work with regularly.
-      </p>
-      <div class="skills-container mt-16 md:mt-24">
-        <div class="skills-track">
-          <div
-            v-for="(skill, index) in isMobile ? repeatedSkills : skills"
-            :key="index"
-            class="skill-card group"
-          >
-            <div class="skill-card-face">
-              <Icon :name="skill.icon" size="20rem" />
-              <span class="font-heading mt-3 text-sm font-medium text-gray-300 md:text-base">
-                {{ skill.name }}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</template>
-
 <script setup>
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 
@@ -48,14 +14,14 @@ onMounted(async () => {
   const handleResize = () => {
     isMobile.value = window.innerWidth < 768
   }
-  
+
   window.addEventListener('resize', handleResize)
 
   await nextTick()
-  
+
   if (gsap && ScrollTrigger) {
     const skillsSection = document.querySelector('#skills')
-    
+
     if (skillsSection) {
       animation = gsap.from('#skill-container', {
         opacity: 0,
@@ -67,10 +33,9 @@ onMounted(async () => {
           start: '20% 80%',
           end: 'bottom 30%',
           toggleActions: 'play none none reverse',
-          markers: true,
         },
       })
-      
+
       // Store ScrollTrigger instance for cleanup
       scrollTrigger = animation.scrollTrigger
     }
@@ -89,7 +54,6 @@ onUnmounted(() => {
   }
 })
 
-
 const skills = ref([
   { name: 'JavaScript', icon: 'skill-icons:javascript' },
   { name: 'Vue.js', icon: 'skill-icons:vuejs-dark' },
@@ -106,12 +70,80 @@ const skills = ref([
   { name: 'AWS', icon: 'skill-icons:aws-dark' },
   { name: 'Python', icon: 'skill-icons:python-dark' },
   { name: 'Supabase', icon: 'skill-icons:supabase-dark' },
-
 ])
 
 const repeatedSkills = computed(() => [...skills.value, ...skills.value])
-</script>
 
+const topLaneSkills = computed(() => skills.value.filter((_, i) => i % 2 === 0))
+const bottomLaneSkills = computed(() => skills.value.filter((_, i) => i % 2 === 1))
+
+const topLaneSkillsLoop = computed(() => [...topLaneSkills.value, ...topLaneSkills.value])
+const bottomLaneSkillsLoop = computed(() => [...bottomLaneSkills.value, ...bottomLaneSkills.value])
+</script>
+<template>
+  <section
+    id="skills"
+    class="min-h-screen overflow-x-hidden overflow-y-hidden bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 pt-30 pb-50 text-gray-300"
+  >
+    <div id="skill-container" class="relative text-center">
+      <!-- Decorative Side Shadows -->
+      <div :class="['side-shadow', !isMobile ? 'left' : 'top']"></div>
+      <div :class="['side-shadow', !isMobile ? 'right' : 'bottom']"></div>
+      <h2
+        class="font-heading animate-fade-in mt-5 bg-gradient-to-tr from-[#fcfdff] from-33% to-[#818dc0] to-100% bg-clip-text px-6 text-3xl font-bold text-transparent md:text-4xl"
+      >
+        Skills & Tools
+      </h2>
+      <p class="font-body animate-fade-in mx-auto mt-3 max-w-2xl px-6 text-lg md:text-xl">
+        Some of the technologies and tools I work with regularly.
+      </p>
+      <div class="skills-container mt-16 md:mt-24">
+        <template v-if="isMobile">
+          <div class="skills-track double-lane">
+            <div
+              v-for="(skill, index) in topLaneSkillsLoop"
+              :key="'top-' + index"
+              class="skill-card group"
+            >
+              <div class="skill-card-face">
+                <Icon :name="skill.icon" size="20rem" />
+                <span class="font-heading mt-3 text-sm font-medium text-gray-300 md:text-base">
+                  {{ skill.name }}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="skills-track double-lane reverse">
+            <div
+              v-for="(skill, index) in bottomLaneSkillsLoop"
+              :key="'bottom-' + index"
+              class="skill-card group"
+            >
+              <div class="skill-card-face">
+                <Icon :name="skill.icon" size="20rem" />
+                <span class="font-heading mt-3 text-sm font-medium text-gray-300 md:text-base">
+                  {{ skill.name }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </template>
+        <template v-else>
+          <div class="skills-track">
+            <div v-for="(skill, index) in skills" :key="index" class="skill-card group">
+              <div class="skill-card-face">
+                <Icon :name="skill.icon" size="20rem" />
+                <span class="font-heading mt-3 text-sm font-medium text-gray-300 md:text-base">
+                  {{ skill.name }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </section>
+</template>
 <style scoped>
 @keyframes fade-in {
   from {
@@ -256,6 +288,68 @@ const repeatedSkills = computed(() => [...skills.value, ...skills.value])
   .skill-card:hover {
     transform: translateZ(25px);
     cursor: pointer;
+  }
+}
+
+.side-shadow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 260px;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 9999px;
+  filter: blur(80px);
+  opacity: 0.55;
+}
+
+.side-shadow.left {
+  left: -130px;
+  background: radial-gradient(circle at left, #38bdf8 0%, transparent 80%);
+}
+
+.side-shadow.right {
+  right: -130px;
+  background: radial-gradient(circle at right, #818dc0 0%, transparent 80%);
+}
+
+.side-shadow.top {
+  top: 0;
+  left: 20%;
+  right: 0;
+  height: 260px;
+  background: radial-gradient(circle at top, #38bdf8 0%, transparent 80%);
+}
+
+.side-shadow.bottom {
+  bottom: 0;
+  height: 260px;
+  background: radial-gradient(circle at bottom, #818dc0 0%, transparent 80%);
+}
+
+@media (max-width: 767px) {
+  .skills-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .skills-track.double-lane {
+    display: flex;
+    gap: 1.5rem;
+    padding: 0 1rem;
+    width: max-content;
+    animation: carousel-scroll 40s linear infinite;
+  }
+
+  .skills-track.double-lane.reverse {
+    animation-direction: reverse;
+  }
+
+  .skills-track:not(.double-lane) {
+    display: none;
   }
 }
 </style>

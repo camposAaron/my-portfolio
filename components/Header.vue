@@ -28,6 +28,10 @@ onMounted(async () => {
       }
     })
 
+    gsap.set(headerRef.value, {
+      backgroundColor: 'rgba(17, 24, 39, 0.8)'
+    })
+
     animation = gsap.to(headerRef.value, {
       width: '80%',
       top: '20px',
@@ -70,25 +74,29 @@ function scrollToSection(href) {
   const id = href.replace('#', '')
   const el = document.getElementById(id)
   if (el) {
-    if (id === 'about') {
-      console.log('isShortMobile:', isShortMobile.value)
-      el.scrollIntoView({ behavior: 'smooth', block: !isShortMobile ? 'start' : 'end' })
-    } else {
-      el.scrollIntoView({ behavior: 'smooth' })
-    }
+    console.log('HERREEEE')
+      // Fallback to native smooth scrolling if Lenis is not available
+      console.log('Using native scrollIntoView')
+      if (id === 'about') {
+        el.scrollIntoView({ behavior: 'smooth', block: !isShortMobile.value ? 'start' : 'end' })
+      } else {
+        el.scrollIntoView({ behavior: 'smooth' })
+      }
   }
 }
 </script>
 
 <style scoped>
 header {
-  transition-property: background-color, box-shadow, height, border-color; /* Include height and border */
+  background-color: rgba(17, 24, 39, 0.8);
+  transition-property: background-color, box-shadow, height, border-color;
 }
 </style>
 <template>
   <header
     ref="headerRef"
-    class="font-heading sticky top-0 z-50 m-auto h-16 w-full border-b border-gray-900 bg-gray-900 shadow-md transition-all duration-300 ease-in-out"
+    style="background-color: rgba(17, 24, 39, 0.8);"
+    class="font-heading sticky top-0  m-auto h-16 w-full border-b border-gray-900 bg-gray-900 shadow-md z-90"
   >
     <div class="container mx-auto flex h-full items-center justify-between px-4 sm:px-6 lg:px-8">
       <Logo class="flex-shrink-0 text-xl" />
@@ -106,10 +114,10 @@ header {
         </div>
       </div>
     </div>
-    <MobileMenu
-      v-model:mobileMenuOpen="mobileMenuOpen"
-      :navLinks="navLinks"
-      :scrollToSection="scrollToSection"
-    />
   </header>
+  <MobileMenu
+    v-model:mobileMenuOpen="mobileMenuOpen"
+    :navLinks="navLinks"
+    :scrollToSection="scrollToSection"
+  />
 </template>

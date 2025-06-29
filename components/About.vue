@@ -1,10 +1,92 @@
+<script setup>
+import { onMounted, onUnmounted, nextTick } from 'vue'
+import Picture from '../components/Picture.vue'
+
+const { $gsap: gsap, $ScrollTrigger: ScrollTrigger } = useNuxtApp()
+
+let tl = null
+let scrollTrigger = null
+
+onMounted(async () => {
+  await nextTick()
+  
+  if (gsap && ScrollTrigger) {
+    const aboutSection = document.querySelector('#about')
+    
+    if (aboutSection) {
+      gsap.set(['.picture-about'], {
+        opacity: 0,
+        x: -50,
+      })
+      gsap.set('#about-heading', {
+        opacity: 0,
+        y: -20
+      })
+      gsap.set(['#about-desc', '#projects-button'], {
+        opacity: 0,
+        x: 20
+      })
+      
+      // Create main timeline
+      tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: aboutSection,
+          start: 'top 80%',
+          end: 'bottom 20%',
+          toggleActions: 'play none none reverse',
+          markers: false,
+        },
+      })
+
+      // Store ScrollTrigger instance for cleanup
+      scrollTrigger = tl.scrollTrigger
+
+      // Animate picture
+      tl.to('.picture-about', {
+        opacity: 1,
+        x: 0,
+        duration: 0.5,
+        ease: 'power2.out',
+      })
+
+      // Animate heading
+      tl.to('#about-heading', {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: 'power2.out',
+      }, '-=0.5')
+
+      // Animate description and button together
+      tl.to(['#about-desc', '#projects-button'], {
+        opacity: 1,
+        x: 0,
+        duration: 0.2,
+        ease: 'power2.out',
+      }, '-=0.3')
+    }
+  }
+})
+
+onUnmounted(() => {
+  // Clean up timeline and ScrollTrigger
+  if (scrollTrigger) {
+    scrollTrigger.kill()
+    scrollTrigger = null
+  }
+  if (tl) {
+    tl.kill()
+    tl = null
+  }
+})
+</script>
 <template>
   <section
     id="about"
-    class="flex w-full flex-row items-center justify-center bg-gray-950 bg-gradient-to-r from-gray-900 via-indigo-950 to-gray-950 py-16 sm:py-24 dark:bg-gray-900"
+    class="flex w-full flex-col items-center justify-center bg-gray-950 bg-gradient-to-r from-gray-900 via-indigo-950 to-gray-950 py-16 sm:py-24 dark:bg-gray-900"
   >
     <div
-      class="flex flex-col items-center gap-12 px-4 sm:px-6 md:flex-row md:gap-16 lg:gap-20 lg:px-8"
+      class="w-[80%] md:w-[90%] flex flex-row flex-wrap items-center justify-center gap-12 px-4 sm:px-6 md:flex-row md:gap-16 lg:gap-20 lg:px-8"
     >
       <Picture class="picture-about  shadow-[0_0_15px_rgba(34,211,238,0.5)"></Picture>
       <div class="animate-fade-in-on-scroll-delay max-w-3xl text-center md:text-left">
@@ -34,80 +116,6 @@
     </div>
   </section>
 </template>
-<script setup>
-import { onMounted, onUnmounted, nextTick } from 'vue'
-import Picture from '../components/Picture.vue'
-
-const { $gsap: gsap, $ScrollTrigger: ScrollTrigger } = useNuxtApp()
-
-let tl = null
-let scrollTrigger = null
-
-onMounted(async () => {
-  await nextTick()
-  
-  if (gsap && ScrollTrigger) {
-    const aboutSection = document.querySelector('#about')
-    
-    if (aboutSection) {
-      gsap.set(['.picture-about', '#about-heading', '#about-desc', '#projects-button'], {
-        opacity: 0
-      })
-      
-      // Create main timeline
-      tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: aboutSection,
-          start: 'top 80%',
-          end: 'bottom 20%',
-          toggleActions: 'play none none reverse',
-          markers: false,
-        },
-      })
-
-      // Store ScrollTrigger instance for cleanup
-      scrollTrigger = tl.scrollTrigger
-
-      // Animate picture
-      tl.to('.picture-about', {
-        opacity: 1,
-        x: -30,
-        duration: 0.3,
-        ease: 'power2.out',
-      })
-
-      // Animate heading
-      tl.to('#about-heading', {
-        opacity: 1,
-        y: -9,
-        duration: 0.4,
-        ease: 'power2.out',
-      }, '-=0.5')
-
-      // Animate description and button together
-      tl.to(['#about-desc', '#projects-button'], {
-        opacity: 1,
-        y: 0,
-        duration: 0.3,
-        ease: 'power2.out',
-      }, '-=0.3')
-    }
-  }
-})
-
-onUnmounted(() => {
-  // Clean up timeline and ScrollTrigger
-  if (scrollTrigger) {
-    scrollTrigger.kill()
-    scrollTrigger = null
-  }
-  if (tl) {
-    tl.kill()
-    tl = null
-  }
-})
-</script>
-
 <style scoped>
 /* Ensure elements are visible by default */
 .picture-about,

@@ -6,8 +6,8 @@
             </template>
         </Hero>
         <About />
-        <Skills />
         <Projects />
+        <Skills />
         <Contact />
     </div>
 </template>

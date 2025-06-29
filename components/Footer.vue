@@ -8,7 +8,7 @@
     <!-- Footer Content -->
     <div class="absolute bottom-8 w-full text-center z-10">
       <div class="flex flex-row w-full justify-center  font-bold text-cyan-300 glow">
-        <Logo class="flex-shrink-0"/>&copy;
+        <Logo class="flex-shrink-0"/> 
         <span>{{ new Date().getFullYear() }}</span>
       </div>
     </div>

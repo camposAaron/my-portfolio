@@ -185,6 +185,7 @@ onUnmounted(() => {
     height: 300px;
     perspective: 1000px;
     opacity: 0.8;
+    z-index: 10;
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;

@@ -3,11 +3,10 @@
     "tailwindStyleSheet": "./assets/main/css",
     "lineWidth": 80,
     "endOfLine": "lf",
-    "printWidth": 100,
+    "printWidth": 80,
     "semi": false,
     "singleQuote": true,
     "trailingComma": "all",
     "arrowParens": "always",
-    "tabWidth": 2,
-    "vue/max-attributes-per-line": true
+    "tabWidth": 2
 }

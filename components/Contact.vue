@@ -52,10 +52,15 @@ function setupContactAnimations() {
   }, '-=0.4')
 
   // Animate submit button
-  contactTl.from('form button[type="submit"]', {
+  contactTl.fromTo('form button', {
     opacity: 0,
     scale: 0.8,
-    duration: 0.5,
+    duration: 0.3,
+    ease: 'back.out(1.7)',
+  }, {
+    opacity: 1,
+    scale: 1,
+    duration: 0.3,
     ease: 'back.out(1.7)',
   }, '-=0.2')
 
@@ -143,7 +148,6 @@ onUnmounted(() => {
   entranceAnimations = []
 })
 </script>
-
 <template>
   <section
     id="contact"

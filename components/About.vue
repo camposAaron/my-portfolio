@@ -97,9 +97,9 @@ onUnmounted(() => {
           and reliable systems. Always learning, always improving — ready to tackle challenges in
           Cloud, CI/CD, and Infrastructure as Code!
         </p>
-        <a href="#projects" id="projects-button"
+        <a href="#contact" id="projects-button"
           class="inline-block rounded-md bg-cyan-600 px-6 py-3 text-base font-medium text-white shadow-[0_0_15px_rgba(34,211,238,0.5)] transition duration-150 ease-in-out hover:bg-cyan-600 hover:shadow-[0_0_20px_rgba(34,211,238,0.7)] focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-900 focus:outline-none">
-          View My Projects
+          Contact Me
         </a>
       </div>
     </div>

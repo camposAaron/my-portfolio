@@ -44,7 +44,7 @@ function setupEntranceAnimations() {
   entranceTl.from('.animate-fade-in', {
     opacity: 0,
     y: 30,
-    duration: 0.8,
+    duration: 0.3,
     ease: 'power2.out',
   })
 
@@ -161,7 +161,7 @@ const autSkills = [
 
         <!-- Mobile Description -->
         <div class="mb-8 md:mb-12 lg:hidden">
-          <ProjectDescription :autSkills="autSkills" :showSkills="false" containerClass="w-full" />
+          <ProjectDescription :autSkills="autSkills" :showSkills="true" containerClass="w-full" />
         </div>
 
         <!-- Project Images -->

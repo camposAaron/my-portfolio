@@ -53,7 +53,7 @@ const handleSubmit = async () => {
 }
 </script>
 <template>
-  <form @submit.prevent="handleSubmit" class="space-y-6 md:col-span-1">
+  <form @submit.prevent="handleSubmit" class="flex flex-col space-y-6 md:col-span-1">
     <FormField v-model="formData.name" label="Name *" type="text" id="name" :error="errors.name" />
 
     <FormField v-model="formData.email" label="Email *" type="email" id="email" :error="errors.email" />
@@ -62,7 +62,7 @@ const handleSubmit = async () => {
       :rows="4" />
 
     <button type="submit" :disabled="isSubmitting"
-      class="w-full transform rounded-lg bg-cyan-600 px-6 py-3 text-sm font-semibold text-white transition-all hover:scale-105 hover:cursor-pointer hover:bg-cyan-700 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed">
+      class="w-full opacity-100 transform rounded-lg bg-cyan-600 py-3 px-6 text-sm font-semibold text-white transition-all hover:cursor-pointer hover:bg-cyan-700 active:scale-95">
       {{ isSubmitting ? 'Sending...' : 'Send Message' }}
     </button>
   </form>

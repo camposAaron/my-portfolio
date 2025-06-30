@@ -2,7 +2,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 export default defineNuxtPlugin((nuxtApp) => {
-  if (process.client) {
+
     gsap.registerPlugin(ScrollTrigger)
     
     // Integrate GSAP ScrollTrigger with Lenis
@@ -22,7 +22,6 @@ export default defineNuxtPlugin((nuxtApp) => {
         }
       }
     })
-  }
 
   return {
     provide: {

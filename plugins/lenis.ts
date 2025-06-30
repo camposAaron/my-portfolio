@@ -40,12 +40,9 @@ export default defineNuxtPlugin((nuxtApp) => {
     }
   }
 
-  // Initialize Lenis on client side
-  if (process.client) {
-    nuxtApp.hook('app:mounted', () => {
-      initLenis()
-    })
-  }
+  nuxtApp.hook('app:mounted', () => {
+    initLenis()
+  })
 
   return {
     provide: {
@@ -54,4 +51,4 @@ export default defineNuxtPlugin((nuxtApp) => {
       destroyLenis,
     },
   }
-}) 
+})

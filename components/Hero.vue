@@ -78,7 +78,7 @@ const socialLinks = [
 
         <!-- Social Links -->
         <div class="animate-fade-in-slow mt-8 flex flex-wrap gap-2 sm:gap-4 md:gap-6">
-          <NavLink class="text-xl font-heading" v-for="link in socialLinks" :key="link.name" :text="link.name"
+          <NavLink class="text-xl font-heading flex items-center gap-1" v-for="link in socialLinks" :key="link.name" :text="link.name"
             @click="onLinkClicked($event, link.name)" :href="link.url">
             <template #icon>
               <Icon :name="link.icon" class="h-5 w-5 sm:h-7 sm:w-7" />

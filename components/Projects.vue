@@ -149,23 +149,23 @@ const autSkills = [
 </script>
 <template>
   <section id="projects"
-    class="flex min-h-screen flex-col bg-gradient-to-r from-gray-950 via-gray-900 to-gray-950 px-6 pt-30 sm:px-8 lg:px-55">
+    class="flex min-h-screen flex-col bg-gradient-to-r from-gray-950 via-gray-900 to-gray-950 pt-30 pb-20">
     <ProjectHeader />
 
-    <div class="relative flex flex-row">
+    <div class="relative flex flex-row w-[90%] sm:w-[80%] m-auto">
       <div class="relative grid grid-cols-1 gap-6 md:gap-8 lg:grid-cols-6 lg:gap-12">
         <!-- Desktop Description -->
-        <div class="project-text sticky top-24 col-span-3 hidden h-[calc(100vh-10rem)] w-full items-center lg:flex">
+        <div class="project-text sticky top-32 col-span-3 hidden h-[calc(100vh-12rem)] w-full items-center lg:flex">
           <ProjectDescription :autSkills="autSkills" :showSkills="true" containerClass="w-full" />
         </div>
 
         <!-- Mobile Description -->
-        <div class="mb-8 md:mb-12 lg:hidden">
+        <div class="mb-8 mt-8 md:mb-12 md:mt-12 lg:hidden">
           <ProjectDescription :autSkills="autSkills" :showSkills="true" containerClass="w-full" />
         </div>
 
         <!-- Project Images -->
-        <div class="col-span-3 lg:pt-[24vh]">
+        <div class="col-span-3 lg:pt-[28vh]">
           <!-- Mobile Slider -->
           <ProjectSlider :images="images" :currentImageIndex="currentImageIndex" @openDialog="openDialog"
             @updateCurrentIndex="updateCurrentIndex" />
@@ -187,5 +187,9 @@ const autSkills = [
     opacity: 1;
     transform: none;
   }
+}
+
+@media(max-height: 800px) {
+
 }
 </style>

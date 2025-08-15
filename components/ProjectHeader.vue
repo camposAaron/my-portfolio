@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-16 text-center sm:mb-20 lg:mb-24">
+  <div class="text-center">
     <h2
       class="font-heading animate-fade-in bg-gradient-to-tr from-[#fcfdff] from-33% to-[#818dc0] to-100% bg-clip-text px-6 text-3xl font-bold text-transparent md:text-4xl lg:text-5xl"
     >

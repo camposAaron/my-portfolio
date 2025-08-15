@@ -92,10 +92,8 @@ onUnmounted(() => {
           About Me
         </h2>
         <p id="about-desc" class="font-body mb-8 text-lg leading-relaxed text-slate-400 sm:text-xl dark:text-slate-400">
-          I'm a passionate developer transitioning into the world of DevOps. With a background in
-          web development and a love for automation, I'm focused on building efficient, scalable,
-          and reliable systems. Always learning, always improving — ready to tackle challenges in
-          Cloud, CI/CD, and Infrastructure as Code!
+          I'm a Software Engineer with over 3 years of experience in the industry. I specialize in building
+          high-quality web applications and services using technologies like Vue.js, Node.js, and AWS. My passion lies in creating seamless user experiences and optimizing performance.
         </p>
         <a href="#contact" id="projects-button"
           class="inline-block rounded-md bg-cyan-600 px-6 py-3 text-base font-medium text-white shadow-[0_0_15px_rgba(34,211,238,0.5)] transition duration-150 ease-in-out hover:bg-cyan-600 hover:shadow-[0_0_20px_rgba(34,211,238,0.7)] focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-900 focus:outline-none">

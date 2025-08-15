@@ -91,5 +91,6 @@ const socialLinks = [
       </div>
     </div>
   </section>
-
+  <Banner/>
+ 
 </template>

@@ -1,12 +1,13 @@
 <script setup>
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import { useShortHeightScreen } from '~/composables/useShortHeightScreen'
 import SectionHeader from './SectionHeader.vue'
 import ContactForm from './ContactForm.vue'
 import ContactInfo from './ContactInfo.vue'
 import SuccessMessage from './SuccessMessage.vue'
 
 const { $gsap: gsap, $ScrollTrigger: ScrollTrigger } = useNuxtApp()
-
+const isShortHeightScreen = useShortHeightScreen(800)
 const isSuccess = ref(false)
 let entranceAnimations = []
 
@@ -16,6 +17,7 @@ const handleSuccess = () => {
     isSuccess.value = false
   }, 5000)
 }
+
 
 function setupContactAnimations() {
   if (!gsap || !ScrollTrigger) return
@@ -151,9 +153,10 @@ onUnmounted(() => {
 <template>
   <section
     id="contact"
-    class="font-body flex flex-col w-full bg-gradient-to-b from-gray-800 to-white dark:to-gray-900 pt-20"
+  class="font-body flex flex-col w-full bg-gradient-to-b from-gray-800 to-white dark:to-gray-900 pt-20"
+  :class="isShortHeightScreen ? 'h-auto' : 'h-screen'"
   >
-    <div class="w-full mx-auto max-w-3xl px-10 py-20 overflox-x-hidden">
+    <div class="w-full mx-auto max-w-3xl px-10 py-15 overflow-x-hidden">
       <SectionHeader
         title="Get in Touch"
         description="Have a project in mind? Let's collaborate! I typically reply within 24 hours."

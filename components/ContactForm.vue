@@ -5,6 +5,7 @@ import FormField from './FormField.vue'
 
 const emit = defineEmits(['success'])
 
+
 // Form Handling
 const formData = reactive({
   name: '',
@@ -28,25 +29,24 @@ const handleSubmit = async () => {
   try {
     await contactSchema.validate(formData, { abortEarly: false })
 
-    // Clear form data
-    Object.keys(formData).forEach((key) => {
-      formData[key] = ''
-    })
-    errors.value = {}
-
+    console.log(formData)
     const response = await $fetch('https://gshsimj431.execute-api.us-east-1.amazonaws.com/default/send-contact-email', {
       method: 'POST',
       body: formData,
     })
 
-    if (!response || response.status !== 200)
+    if (!response)
       throw new Error('Failed to send message')
 
     emit('success')
-  } catch (err) {
-    err.inner.forEach((error) => {
-      errors[error.path] = error.message
+
+    // Clear form data
+    Object.keys(formData).forEach((key) => {
+      formData[key] = ''
     })
+    errors.value = {}
+  } catch (err) {
+     console.error(err)
   } finally {
     isSubmitting.value = false
   }

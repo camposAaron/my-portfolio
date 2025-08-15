@@ -5,7 +5,7 @@ import { useNuxtApp } from '#app'
 const { $gsap: gsap, $ScrollTrigger: ScrollTrigger } = useNuxtApp()
 
 const mobileMenuOpen = ref(false)
-const isShortMobile = computed(() => window.innerHeight < 600)
+
 const navLinks = ref([
   { href: '#about', text: 'About' },
   { href: '#skills', text: 'Skills' },
@@ -16,6 +16,8 @@ const navLinks = ref([
 const headerRef = ref(null)
 let headerScrollTrigger = null
 let animation = null
+
+const isShortHeightScreen = useShortHeightScreen(800)
 
 onMounted(async () => {
   await nextTick()
@@ -73,7 +75,7 @@ function scrollToSection(href) {
   const el = document.getElementById(id)
   if (el) {
       if (id === 'about') {
-        el.scrollIntoView({ behavior: 'smooth', block: !isShortMobile.value ? 'start' : 'end' })
+        el.scrollIntoView({ behavior: 'smooth', block: !isShortHeightScreen.value ? 'center' : 'start' })
       } else {
         el.scrollIntoView({ behavior: 'smooth' })
       }

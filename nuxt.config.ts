@@ -31,6 +31,9 @@ export default defineNuxtConfig({
        },
        'Inter': {
          wght: '300..700'
+      },
+      'Orbitron': {
+        wght: '400..700'
       }
     }
   },

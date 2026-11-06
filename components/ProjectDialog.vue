@@ -2,20 +2,21 @@
   <Transition name="fade">
     <div
       v-if="showDialog"
-      class="bg-opacity-80 fixed inset-0 z-50 flex items-center justify-center bg-black p-6"
+      class="dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Project recording"
       @click.self="$emit('closeDialog')"
+      @keydown.esc="$emit('closeDialog')"
     >
-      <div class="relative w-full max-w-4xl rounded-2xl bg-gray-900 p-6">
-        <button
-          class="absolute top-4 right-4 text-3xl text-white transition-colors duration-200 hover:text-red-400"
-          @click="$emit('closeDialog')"
-        >
-          &times;
+      <div class="dialog__box">
+        <button ref="closeRef" type="button" class="btn btn--quiet" @click="$emit('closeDialog')">
+          <Icon name="heroicons:x-mark-20-solid" />
+          Close
         </button>
         <video
           :src="selectedImage"
-          class="w-full rounded-xl"
-          autoplay
+          :autoplay="!reduceMotion"
           loop
           muted
           playsinline
@@ -27,7 +28,9 @@
 </template>
 
 <script setup>
-defineProps({
+import { ref, watch, nextTick } from 'vue'
+
+const props = defineProps({
   showDialog: {
     type: Boolean,
     default: false
@@ -39,16 +42,20 @@ defineProps({
 })
 
 defineEmits(['closeDialog'])
+
+// Move focus into the dialog when it opens and back to where it came from when it closes.
+const closeRef = ref(null)
+const reduceMotion = ref(false)
+let returnTo = null
+watch(() => props.showDialog, async (open) => {
+  if (open) {
+    returnTo = document.activeElement
+    reduceMotion.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    await nextTick()
+    closeRef.value?.focus()
+  } else if (returnTo instanceof HTMLElement) {
+    returnTo.focus()
+    returnTo = null
+  }
+})
 </script>
-
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style> 

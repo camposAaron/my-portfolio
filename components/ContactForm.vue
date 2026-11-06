@@ -24,8 +24,15 @@ const contactSchema = yup.object().shape({
   phoneNumber: yup.string().optional(),
 })
 
+const clearErrors = () => {
+  Object.keys(errors).forEach((key) => {
+    delete errors[key]
+  })
+}
+
 const handleSubmit = async () => {
   isSubmitting.value = true
+  clearErrors()
   try {
     await contactSchema.validate(formData, { abortEarly: false })
 
@@ -44,26 +51,33 @@ const handleSubmit = async () => {
     Object.keys(formData).forEach((key) => {
       formData[key] = ''
     })
-    errors.value = {}
+    clearErrors()
   } catch (err) {
-     console.error(err)
+    // Show each validation message under its field and move focus to the first one.
+    if (err instanceof yup.ValidationError) {
+      err.inner.forEach((e) => {
+        if (e.path && !errors[e.path]) errors[e.path] = e.message
+      })
+      const first = ['name', 'email', 'message'].find((key) => errors[key])
+      if (first) document.getElementById(first)?.focus()
+    }
+    console.error(err)
   } finally {
     isSubmitting.value = false
   }
 }
 </script>
 <template>
-  <form @submit.prevent="handleSubmit" class="flex flex-col space-y-6 md:col-span-1">
-    <FormField v-model="formData.name" label="Name *" type="text" id="name" :error="errors.name" />
+  <form @submit.prevent="handleSubmit" class="form contact-form" novalidate>
+    <FormField v-model="formData.name" label="Name *" type="text" id="name" autocomplete="name" :error="errors.name" />
 
-    <FormField v-model="formData.email" label="Email *" type="email" id="email" :error="errors.email" />
+    <FormField v-model="formData.email" label="Email *" type="email" id="email" autocomplete="email" :error="errors.email" />
 
     <FormField v-model="formData.message" label="Message *" type="textarea" id="message" :error="errors.message"
-      :rows="4" />
+      :rows="5" />
 
-    <button type="submit" :disabled="isSubmitting"
-      class="w-full opacity-100 transform rounded-lg bg-cyan-600 py-3 px-6 text-sm font-semibold text-white transition-all hover:cursor-pointer hover:bg-cyan-700 active:scale-95">
-      {{ isSubmitting ? 'Sending...' : 'Send Message' }}
+    <button type="submit" :disabled="isSubmitting" :aria-busy="isSubmitting ? 'true' : undefined" class="btn btn--primary">
+      {{ isSubmitting ? 'Sending…' : 'Send message' }}
     </button>
   </form>
 </template>

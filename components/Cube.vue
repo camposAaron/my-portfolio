@@ -1,53 +1,74 @@
 <template>
-    <div class="cube-container" @mousedown="handleMouseDown" :style="{ cursor: isDragging ? 'grabbing' : 'grab' }">
-        <div class="idle-rotator" :style="idleRotatorStyle">
-            <div class="cube" :style="cubeStyle">
-                <div class="face front">
-                    <pre>
-                        <code :class="codeClass" class="typing-effect">
-                           kubectl get pods -n develop
-                            - kubectl logs aut-asd1140-123xq -f
-                        </code>
-                    </pre>
-                </div>
-                <div class="face back">
-                    <pre><code :class="codeClass">deployApp("prod");</code></pre>
-                </div>
-                <div class="face right">
-                    <pre><code :class="codeClass">git commit -m "fix: update config";</code></pre>
-                </div>
-                <div class="face left">
-                    <pre><code :class="codeClass">aws ec2 start-instance --instance-id i-12345;</code></pre>
-                </div>
-                <div class="face top">
-                    <pre><code :class="codeClass">export CLOUD_PROVIDER="AWS";</code></pre>
-                </div>
-                <div class="face bottom">
-                    <pre :class="preClass"><code :class="codeClass">docker-compose up --build;</code></pre>
-                </div>
+  <figure ref="stageRef" class="cube-stage" data-loop>
+    <div class="cube-stage__frame">
+      <div class="cube-glow" aria-hidden="true"></div>
+      <div
+        class="cube-container"
+        :class="{ 'is-dragging': isDragging }"
+        role="img"
+        aria-label="A cube of shell commands: kubectl, docker-compose, git and aws. Drag it to turn it."
+        @pointerdown="handleMouseDown"
+      >
+        <div class="idle-rotator" :class="{ 'is-held': !isIdle }">
+          <div class="cube" :style="cubeStyle">
+            <div class="face front" aria-hidden="true">
+              <pre><code><b>$</b> kubectl get pods \
+    -n develop
+<b>$</b> kubectl logs -f \
+    aut-asd1140-123xq</code></pre>
             </div>
+            <div class="face back" aria-hidden="true">
+              <pre><code>deployApp("prod");</code></pre>
+            </div>
+            <div class="face right" aria-hidden="true">
+              <pre><code><b>$</b> git commit -m \
+  "fix: update config";</code></pre>
+            </div>
+            <div class="face left" aria-hidden="true">
+              <pre><code><b>$</b> aws ec2 \
+  start-instance \
+  --instance-id i-12345;</code></pre>
+            </div>
+            <div class="face top" aria-hidden="true">
+              <pre><code><b>$</b> export \
+  CLOUD_PROVIDER="AWS";</code></pre>
+            </div>
+            <div class="face bottom" aria-hidden="true">
+              <pre><code><b>$</b> docker-compose \
+  up --build;</code></pre>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+    <figcaption>
+      <span>Drag to turn it</span>
+      <button type="button" class="btn btn--quiet" data-loop-toggle @click="toggle">
+        {{ held ? 'Play' : 'Pause' }}
+      </button>
+    </figcaption>
+  </figure>
 </template>
 
 <script setup>
-import { ref, computed, onUnmounted, onMounted } from "vue"
+import { ref, computed, watch, onUnmounted } from "vue"
+import { useLoop } from "~/composables/useLoop"
+import { useHeroMotion } from "~/composables/useHeroMotion"
 
-const { $gsap: gsap } = useNuxtApp()
-
-const codeClass = "typing-effect text-sm/6"
-const preClass =
-	"overflow-hidden whitespace-pre-wrap text-left text-sm/6 font-mono text-gray-300"
 // --- Configuration ---
 const DEFAULT_ROTATE_X = -20
 const DEFAULT_ROTATE_Y = 30
 const RETURN_TRANSITION_DURATION = "0.6s"
 const DRAG_TRANSITION_DURATION = "0.05s"
 const RETURN_TRANSITION_TIMING = "cubic-bezier(0.23, 1, 0.32, 1)"
-const IDLE_ANIMATION_DURATION = "45s"
 const sensitivity = 0.5
 
 // --- State ---
+const stageRef = ref(null)
+const { held, toggle } = useLoop(stageRef, { pauseOnHover: true })
+// The cube's Pause button also holds the ASCII field behind the hero.
+const heroMotion = useHeroMotion()
+watch(held, (value) => { heroMotion.held.value = value }, { immediate: true })
 const rotateX = ref(DEFAULT_ROTATE_X)
 const rotateY = ref(DEFAULT_ROTATE_Y)
 const isDragging = ref(false)
@@ -55,7 +76,6 @@ const isIdle = ref(true)
 const startX = ref(0)
 const startY = ref(0)
 let returnTimeoutId = null
-let animations = []
 
 // --- Computed Styles ---
 // Style for the inner cube (handles drag/return transform and transition)
@@ -73,13 +93,7 @@ const cubeStyle = computed(() => {
 	}
 })
 
-// Style for the idle rotator wrapper (handles play/pause of idle animation)
-const idleRotatorStyle = computed(() => ({
-	animationDuration: IDLE_ANIMATION_DURATION,
-	animationPlayState: isIdle.value ? "running" : "paused",
-}))
-
-// --- Event Handlers ---
+// --- Event Handlers (pointer events, so touch and pen drag too) ---
 const handleMouseDown = (event) => {
 	// Clear any pending timeout to resume idle, in case user clicks quickly
 	if (returnTimeoutId) {
@@ -93,8 +107,9 @@ const handleMouseDown = (event) => {
 	startX.value = event.clientX
 	startY.value = event.clientY
 	event.preventDefault()
-	window.addEventListener("mousemove", handleMouseMove)
-	window.addEventListener("mouseup", handleMouseUp)
+	window.addEventListener("pointermove", handleMouseMove)
+	window.addEventListener("pointerup", handleMouseUp)
+	window.addEventListener("pointercancel", handleMouseUp)
 }
 
 const handleMouseMove = (event) => {
@@ -113,18 +128,17 @@ const handleMouseUp = () => {
 	if (!isDragging.value) return // Prevent potential multiple triggers
 
 	isDragging.value = false // End dragging state
-	window.removeEventListener("mousemove", handleMouseMove)
-	window.removeEventListener("mouseup", handleMouseUp)
+	window.removeEventListener("pointermove", handleMouseMove)
+	window.removeEventListener("pointerup", handleMouseUp)
+	window.removeEventListener("pointercancel", handleMouseUp)
 
 	// Initiate return to default position (cubeStyle computed property handles transition)
 	rotateX.value = DEFAULT_ROTATE_X
 	rotateY.value = DEFAULT_ROTATE_Y
 
 	// Schedule the idle animation to resume *after* the return transition should have finished
-	// Convert duration string (e.g., '0.6s') to milliseconds
 	const returnDurationMs = Number.parseFloat(RETURN_TRANSITION_DURATION) * 1000
 
-	// Clear previous timeout just in case (though unlikely needed here)
 	if (returnTimeoutId) clearTimeout(returnTimeoutId)
 
 	returnTimeoutId = setTimeout(() => {
@@ -132,235 +146,17 @@ const handleMouseUp = () => {
 		if (!isDragging.value) {
 			isIdle.value = true
 		}
-		returnTimeoutId = null // Clear the stored ID
+		returnTimeoutId = null
 	}, returnDurationMs)
 }
 
-onMounted(() => {
-	if (gsap) {
-		const faces = document.querySelectorAll(".face")
-		const facesAnim = gsap.to(faces, {
-			color: "white",
-			textShadow: "none",
-			boxShadow: "0 0 20px rgba(255, 255, 255, 0.2)",
-			border: "1px solid rgba(255, 255, 255, 0.1)",
-			repeat: -1,
-			duration: 6,
-			yoyo: true,
-		})
-
-		const containerAnim = gsap.from(".cube-container", {
-			y: -30,
-			opacity: 0.2,
-			duration: 1,
-			ease: "power2.out",
-		})
-
-		animations = [facesAnim, containerAnim]
-	}
-})
-
 // --- Cleanup ---
 onUnmounted(() => {
-	window.removeEventListener("mousemove", handleMouseMove)
-	window.removeEventListener("mouseup", handleMouseUp)
-	// Clear timeout if component unmounts during the return transition
+	window.removeEventListener("pointermove", handleMouseMove)
+	window.removeEventListener("pointerup", handleMouseUp)
+	window.removeEventListener("pointercancel", handleMouseUp)
 	if (returnTimeoutId) {
 		clearTimeout(returnTimeoutId)
 	}
-	// Clean up animations
-	animations.forEach(anim => {
-		if (anim) {
-			anim.kill()
-		}
-	})
-	animations = []
 })
 </script>
-
-<style scoped>
-/* --- Container and Interaction --- */
-.cube-container {
-    width: 300px;
-    height: 300px;
-    perspective: 1000px;
-    opacity: 0.8;
-    z-index: 10;
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-}
-
-/* --- Idle Rotation --- */
-@keyframes rotateIdle {
-    from {
-        transform: rotateY(0deg) rotateX(5deg);
-        /* Gentle combined rotation */
-    }
-
-    to {
-        transform: rotateY(360deg) rotateX(5deg);
-        /* Loop Y axis */
-    }
-}
-
-.idle-rotator {
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-    /* Applied via idleRotatorStyle: animation-duration, animation-play-state */
-    animation-name: rotateIdle;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-}
-
-/* --- Draggable Cube --- */
-.cube {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    /* Keep faces positioned relative to this */
-    transform-style: preserve-3d;
-    /* Transform and Transition handled by cubeStyle computed property */
-}
-
-
-/* --- Face Styles (Unchanged) --- */
-.face {
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.688);
-    padding: 10px;
-    box-sizing: border-box;
-    background: rgba(0, 0, 0, 0.4);
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
-    overflow: hidden;
-    border: 1px solid rgba(0, 255, 255, 0.1);
-    color: #00ffff;
-    text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff;
-}
-
-.face pre {
-    margin: 0;
-    padding: 10px;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    font-size: 14px;
-    line-height: 1.4;
-    max-width: 100%;
-    text-align: left;
-    width: 100%;
-
-}
-
-/* Typing Effect (Unchanged) */
-.typing-effect {
-    width: 0;
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
-    border-right: 2px solid rgba(0, 255, 255, 0.75);
-    animation: typing 5s steps(40) infinite, blink 0.75s step-end infinite;
-
-}
-
-.cube-text {
-    border-right: 2px solid rgba(0, 255, 255, 0.75);
-}
-
-
-@keyframes typing {
-    0% {
-        width: 0;
-    }
-
-    50% {
-        width: 100%;
-    }
-
-    80% {
-        width: 100%;
-    }
-
-    100% {
-        width: 0;
-    }
-}
-
-@keyframes blink {
-    50% {
-        border-color: transparent;
-    }
-}
-
-/* Cube Faces Positioning (Unchanged) */
-.front {
-    transform: translateZ(150px);
-}
-
-.back {
-    transform: rotateY(180deg) translateZ(150px);
-}
-
-.right {
-    transform: rotateY(90deg) translateZ(150px);
-}
-
-.left {
-    transform: rotateY(-90deg) translateZ(150px);
-}
-
-.top {
-    transform: rotateX(90deg) translateZ(150px);
-}
-
-.bottom {
-    transform: rotateX(-90deg) translateZ(150px);
-}
-
-@media (max-width: 750px) {
-    .cube-container {
-        margin-top: 30px;
-        width: 200px;
-        height: 200px;
-    }
-
-    .face {
-        width: 200px;
-        height: 200px;
-    }
-
-    .front {
-        transform: translateZ(100px);
-    }
-
-    .back {
-        transform: rotateY(180deg) translateZ(100px);
-    }
-
-    .right {
-        transform: rotateY(90deg) translateZ(100px);
-    }
-
-    .left {
-        transform: rotateY(-90deg) translateZ(100px);
-    }
-
-    .top {
-        transform: rotateX(90deg) translateZ(100px);
-    }
-
-    .bottom {
-        transform: rotateX(-90deg) translateZ(100px);
-    }
-
-}
-</style>

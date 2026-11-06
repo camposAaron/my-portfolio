@@ -1,7 +1,6 @@
 <template>
-  <nav class="hidden items-center space-x-6 md:flex lg:space-x-8">
+  <nav class="nav" aria-label="Sections">
     <NavLink
-      class="px-1 focus:ring-2 focus:ring-white focus:ring-offset-gray-800 focus:outline-none dark:hover:bg-gray-700"
       v-for="link in navLinks"
       :key="link.href"
       :href="link.href"

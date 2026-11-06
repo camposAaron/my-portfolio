@@ -1,19 +1,20 @@
 <script setup>
 defineProps({
   customClass: String,
+  /** 'md' for the header and menu, 'lg' for the footer. */
+  size: { type: String, default: 'md' },
 })
 </script>
 <template>
   <div :class="customClass">
-    <a
-      href="/"
-      class="flex items-center font-bold text-gray-100 transition duration-150 ease-in-out hover:text-white dark:text-gray-200 dark:hover:text-white"
-    >
-      <span
-        >&lt;/Aaron<span class="font-mono text-cyan-400 text-shadow-cyan-800"
-          >DEV</span
-        >&gt;</span
-      >
+    <!-- Trimmed copies of public/branding/aarondev-logo-transparent.png (2172x724). -->
+    <a href="/" class="wordmark" :class="`wordmark--${size}`" aria-label="AaronDEV, back to the top">
+      <img
+        :src="size === 'lg' ? '/branding/aarondev-logo-144.png' : '/branding/aarondev-logo-96.png'"
+        alt="AaronDEV"
+        width="400"
+        height="96"
+      />
     </a>
   </div>
 </template>

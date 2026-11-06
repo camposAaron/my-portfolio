@@ -1,0 +1,41 @@
+:root {
+  color-scheme: dark;
+  --space-3xs: 2px; --space-2xs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px; --space-2xl: 64px; --space-3xl: 96px; --space-4xl: 144px;
+  --text-xs: 0.8125rem; --text-sm: 0.875rem; --text-md: 1rem; --text-lg: 1.125rem; --text-xl: 1.375rem; --text-2xl: 1.75rem; --text-3xl: 2.25rem;
+  --text-display: clamp(2.5rem, 4.2vw + 0.75rem, 4.75rem);
+  --text-section: clamp(2rem, 2.6vw + 1rem, 3.5rem);
+  --text-title: clamp(1.25rem, 0.6vw + 1rem, 1.5rem);
+  --text-lead: clamp(1.0625rem, 0.4vw + 0.95rem, 1.3125rem);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-in: cubic-bezier(0.7, 0, 0.84, 0); --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms; --dur-short: 220ms; --dur-long: 420ms;
+  --container: 1360px; --gutter: 64px; --gap-columns: 32px; --section-gap-s: 112px; --section-gap: 136px; --section-gap-l: 168px;
+  --z-base: 1; --z-raised: 10; --z-dropdown: 100; --z-sticky: 200; --z-sticky-nav: 300; --z-modal: 400; --z-toast: 500; --z-tooltip: 600;
+
+  /* Carbon + coral. Base colours: carbon #101416, coral #FF7865, ivory #F2EDE6. */
+  --color-paper: #101416;              /* page ground */
+  --color-paper-2: #161b1e;            /* raised surface */
+  --color-paper-3: #0b0e0f;            /* deepest step: video wells, inputs */
+  --color-surface: rgb(29 36 39 / 0.62);   /* translucent panel over the ground */
+  --color-surface-hi: rgb(38 46 50 / 0.72);
+  --color-ink: #F2EDE6;                /* 16.4:1 on carbon */
+  --color-ink-2: #CFC8BF;              /* 11.6:1 on carbon */
+  --color-muted: #9C968F;              /* 6.4:1 on carbon */
+  --color-rule: #262E32;
+  --color-rule-2: #3A444A;
+  --color-accent: #FF7865;             /* 7.2:1 on carbon */
+  --color-accent-hover: #FF907F;
+  --color-accent-ink: #101416;         /* text on a coral fill, 7.2:1 */
+  --color-accent-soft: rgb(255 120 101 / 0.12);
+  --color-accent-line: rgb(255 120 101 / 0.42);
+  --color-accent-glow: rgb(255 120 101 / 0.3);
+  --color-focus: #FF7865;
+  --color-error: #FF8A7A;
+  --color-ok: #7FD1A2;
+  --color-ok-soft: rgb(127 209 162 / 0.12);
+
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Host Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-outlier: "Atkinson Hyperlegible Mono", ui-monospace, monospace;
+  --radius-card: 14px; --radius-pill: 8px; --rule-hair: 1px;
+  --tracking-display: -0.025em; --display-weight: 600;
+}

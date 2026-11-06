@@ -1,12 +1,9 @@
 <template>
-  <div class="text-center">
-    <h2 
-      :id="id"
-      class="font-heading mb-4 bg-gradient-to-b from-white to-gray-300 bg-clip-text text-3xl font-bold text-transparent md:text-4xl"
-    >
+  <div class="head">
+    <h2 :id="id">
       {{ title }}
     </h2>
-    <p class="mb-12 text-lg text-gray-600 dark:text-gray-300">
+    <p class="lead">
       {{ description }}
     </p>
   </div>
@@ -27,4 +24,4 @@ defineProps({
     default: ''
   }
 })
-</script> 
+</script>

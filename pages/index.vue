@@ -1,13 +1,14 @@
 <template>
-    <div class="min-h-screen w-full">
+    <main id="main">
         <Hero>
             <template #cube>
                 <Cube />
             </template>
         </Hero>
-        <About />
         <Projects />
+        <About />
         <Skills />
+        <Services />
         <Contact />
-    </div>
+    </main>
 </template>

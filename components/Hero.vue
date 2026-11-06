@@ -1,96 +1,62 @@
 <script setup>
-import { onMounted, onUnmounted } from 'vue'
-import NavLink from '../components/NavLink.vue'
+import { contact } from '~/data/contact'
+import { useResume } from '~/composables/useResume'
 
-const { $gsap: gsap } = useNuxtApp()
+const { openResume, loading, failed } = useResume()
 
-let animations = []
-
-onMounted(() => {
-  if (gsap) {
-    const greetingAnim = gsap.from('#greeting', {
-      opacity: 0.1,
-      y: 30,
-      duration: 3,
-      ease: 'elastic',
-    })
-
-    const fadeAnim = gsap.fromTo('.animate-fade-in-slow', {
-      opacity: 0.1,
-      duration: 1,
-      y: 10
-    }, {
-      opacity: 1,
-      duration: 1,
-      y: 0
-    })
-
-    animations = [greetingAnim, fadeAnim]
-  }
-})
-
-onUnmounted(() => {
-  // Clean up animations
-  animations.forEach(anim => {
-    if (anim) {
-      anim.kill()
-    }
-  })
-  animations = []
-})
-
-const onLinkClicked = async (event, linkName) => {
-  if (linkName === 'Resume') {
-    try {
-      const response = await $fetch('https://gshsimj431.execute-api.us-east-1.amazonaws.com/default/get-resume')
-      const data = JSON.parse(response)
-      const resumeUrl = data.resumeUrl
-
-      window.open(resumeUrl, '_blank')
-
-    } catch (error) {
-      console.error('Error fetching resume:', error)
-    }
-  } else {
-    console.log(`Link clicked: ${linkName}`)
-  }
+function viewWork(event) {
+  const el = document.getElementById('projects')
+  if (!el) return
+  event.preventDefault()
+  const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  el.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' })
+  el.setAttribute('tabindex', '-1')
+  el.focus({ preventScroll: true })
 }
-
-const socialLinks = [
-  { name: 'GitHub', url: 'https://github.com/camposAaron', icon: 'entypo-social:github' },
-  { name: 'LinkedIn', url: 'https://www.linkedin.com/in/josu%C3%A9-aaron-campos-a585371a8/', icon: 'entypo-social:linkedin' },
-  { name: 'Resume', icon: 'heroicons:document-arrow-down-solid' },
-]
 </script>
 
 <template>
-  <section id="hero"
-    class="flex min-h-screen w-full flex-col items-center justify-center  bg-gradient-to-r from-gray-900 via-indigo-950 to-gray-950 md:flex-row ">
-    <div class="w-[80%] md:w-[90%] flex flex-row flex-wrap m-auto items-center justify-center space-y-10 space-x-10">
-      <!-- Text Section -->
-      <div class="max-w-xl text-left md:w-1/2 z-50">
-        <h1 id="greeting" class="font-heading  mb-4 text-3xl font-bold sm:text-4xl md:text-6xl">
-          Hi, I'm <span class="text-cyan-400">Aaron Campos</span>
-        </h1>
-        <p class="font-body slow text-base text-gray-400 sm:text-lg md:text-2xl">
-          Software Engineer passionate about Cloud, Automation, and Building Reliable Systems.
+  <section id="hero" class="hero" aria-labelledby="greeting">
+    <HeroField />
+    <div class="container hero__grid">
+      <div class="hero__text">
+        <p class="hero__id">
+          <span class="hero__name">{{ contact.name }}</span>
+          <span class="hero__role">· {{ contact.role }}</span>
         </p>
-
-        <!-- Social Links -->
-        <div class="animate-fade-in-slow mt-8 flex flex-wrap gap-2 sm:gap-4 md:gap-6">
-          <NavLink class="text-xl font-heading flex items-center gap-1" v-for="link in socialLinks" :key="link.name" :text="link.name"
-            @click="onLinkClicked($event, link.name)" :href="link.url">
-            <template #icon>
-              <Icon :name="link.icon" class="h-5 w-5 sm:h-7 sm:w-7" />
-            </template>
-          </NavLink>
+        <h1 id="greeting">
+          Web applications.<br />
+          Backend services.<br />
+          Cloud infrastructure.
+        </h1>
+        <p class="hero__intro">
+          I’m a software engineer based in Managua, Nicaragua, with 3+ years of experience building web
+          applications. My work spans interfaces, backend services, and cloud technologies, including an
+          employee self-service platform for payroll documents, leave requests, and internal workflows.
+        </p>
+        <p class="status"><span class="status__dot" aria-hidden="true"></span>{{ contact.status }}</p>
+        <div class="hero__actions">
+          <a href="#projects" class="btn btn--primary" @click="viewWork">View my work</a>
+          <button
+            type="button"
+            class="btn"
+            :aria-busy="loading ? 'true' : undefined"
+            :disabled="loading"
+            @click="openResume"
+          >
+            <Icon name="heroicons:arrow-down-tray-20-solid" />
+            {{ loading ? 'Opening…' : 'Download résumé' }}
+          </button>
+          <SocialLinks />
         </div>
+        <p v-if="failed" class="hero__error" role="alert">
+          The résumé didn’t open. Try again, or write to
+          <a class="link" :href="`mailto:${contact.email}`">{{ contact.email }}</a>.
+        </p>
       </div>
-      <div id="cubeSlot" class="flex w-full justify-center md:w-1/3">
+      <div id="cubeSlot">
         <slot name="cube"></slot>
       </div>
     </div>
   </section>
-  <Banner/>
- 
 </template>

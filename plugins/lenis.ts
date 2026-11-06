@@ -41,6 +41,8 @@ export default defineNuxtPlugin((nuxtApp) => {
   }
 
   nuxtApp.hook('app:mounted', () => {
+    // Smooth scrolling stays off for visitors who ask for reduced motion.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     initLenis()
   })
 

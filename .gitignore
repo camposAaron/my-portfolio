@@ -23,3 +23,6 @@ logs
 .env.*
 !.env.example
 .actrc
+
+# Recorder raw captures
+recorder/.raw

@@ -1,0 +1,13 @@
+{
+  "name": "portfolio-recorder",
+  "private": true,
+  "type": "module",
+  "description": "Scripted Playwright recordings of project demos for the portfolio.",
+  "scripts": {
+    "record": "node record.mjs",
+    "setup": "playwright install chromium"
+  },
+  "devDependencies": {
+    "playwright": "^1.65.0"
+  }
+}

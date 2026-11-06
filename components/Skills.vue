@@ -1,355 +1,153 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { onMounted, onUnmounted, nextTick } from 'vue'
 
 const { $gsap: gsap, $ScrollTrigger: ScrollTrigger } = useNuxtApp()
 
-const isMobile = ref(false)
-let scrollTrigger = null
 let animation = null
 
+const skillGroups = [
+  {
+    title: 'Frontend',
+    skills: [
+      { name: 'TypeScript', icon: 'skill-icons:typescript' },
+      { name: 'Vue.js', icon: 'skill-icons:vuejs-dark' },
+      { name: 'React', icon: 'skill-icons:react-dark' },
+    ],
+  },
+  {
+    title: 'Backend',
+    skills: [
+      { name: 'Node.js', icon: 'skill-icons:nodejs-dark' },
+      { name: 'NestJS', icon: 'skill-icons:nestjs-dark' },
+      { name: 'Express', icon: 'skill-icons:expressjs-dark' },
+      { name: 'PostgreSQL', icon: 'skill-icons:postgresql-dark' },
+    ],
+  },
+  {
+    title: 'Cloud & DevOps',
+    skills: [
+      { name: 'AWS', icon: 'skill-icons:aws-dark' },
+      { name: 'Docker', icon: 'skill-icons:docker' },
+      { name: 'Kubernetes', icon: 'skill-icons:kubernetes' },
+      { name: 'Git', icon: 'skill-icons:git' },
+    ],
+  },
+]
+
 onMounted(async () => {
-  isMobile.value = window.innerWidth < 768
-
-  // Add resize listener to update isMobile when window size changes
-  const handleResize = () => {
-    isMobile.value = window.innerWidth < 768
-  }
-
-  window.addEventListener('resize', handleResize)
-
   await nextTick()
+  if (!gsap || !ScrollTrigger) return
 
-  if (gsap && ScrollTrigger) {
-    const skillsSection = document.querySelector('#skills')
-
-    if (skillsSection) {
-      animation = gsap.from('#skill-container', {
-        opacity: 0,
-        y: 50,
-        duration: 2,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: skillsSection,
-          start: '20% 80%',
-          end: 'bottom 30%',
-          toggleActions: 'play none none reverse',
-        },
-      })
-
-      // Store ScrollTrigger instance for cleanup
-      scrollTrigger = animation.scrollTrigger
-    }
-  }
+  animation = gsap.from('.skill-group', {
+    opacity: 0,
+    y: 40,
+    duration: 0.8,
+    stagger: 0.15,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: '#skills',
+      start: 'top 70%',
+      toggleActions: 'play none none reverse',
+    },
+  })
 })
 
 onUnmounted(() => {
-  // Clean up ScrollTrigger when component is unmounted
-  if (scrollTrigger) {
-    scrollTrigger.kill()
-    scrollTrigger = null
-  }
-  if (animation) {
-    animation.kill()
-    animation = null
-  }
+  animation?.scrollTrigger?.kill()
+  animation?.kill()
+  animation = null
 })
-
-const skills = ref([
-  { name: 'JavaScript', icon: 'skill-icons:javascript' },
-  { name: 'Vue.js', icon: 'skill-icons:vuejs-dark' },
-  { name: 'Angular', icon: 'skill-icons:angular-dark' },
-  { name: 'React', icon: 'skill-icons:react-dark' },
-  { name: 'NestJS', icon: 'skill-icons:nestjs-dark' },
-  { name: 'Node.js', icon: 'skill-icons:nodejs-dark' },
-  { name: 'Tailwind CSS', icon: 'skill-icons:tailwindcss-dark' },
-  { name: 'Git', icon: 'skill-icons:git' },
-  { name: 'Docker', icon: 'skill-icons:docker' },
-  { name: 'Kubernetes', icon: 'skill-icons:kubernetes' },
-  { name: 'TypeScript', icon: 'skill-icons:typescript' },
-  { name: 'PostgreSQL', icon: 'skill-icons:postgresql-dark' },
-  { name: 'AWS', icon: 'skill-icons:aws-dark' },
-  { name: 'Python', icon: 'skill-icons:python-dark' },
-  { name: 'Supabase', icon: 'skill-icons:supabase-dark' },
-])
-
-const repeatedSkills = computed(() => [...skills.value, ...skills.value])
-
-const topLaneSkills = computed(() => skills.value.filter((_, i) => i % 2 === 0))
-const bottomLaneSkills = computed(() => skills.value.filter((_, i) => i % 2 === 1))
-
-const topLaneSkillsLoop = computed(() => [...topLaneSkills.value, ...topLaneSkills.value])
-const bottomLaneSkillsLoop = computed(() => [...bottomLaneSkills.value, ...bottomLaneSkills.value])
 </script>
+
 <template>
   <section
     id="skills"
-    class="min-h-screen overflow-x-hidden overflow-y-hidden bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 pt-30 pb-50 text-gray-300"
+    class="relative overflow-hidden bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 px-6 py-24 text-gray-300 md:py-32"
   >
-    <div id="skill-container" class="relative text-center">
-      <!-- Decorative Side Shadows -->
-      <div :class="['side-shadow', !isMobile ? 'left' : 'top']"></div>
-      <div :class="['side-shadow', !isMobile ? 'right' : 'bottom']"></div>
+    <div class="side-shadow left" aria-hidden="true"></div>
+    <div class="side-shadow right" aria-hidden="true"></div>
+
+    <div class="relative mx-auto max-w-5xl text-center">
       <h2
-        class="font-heading animate-fade-in mt-5 bg-gradient-to-tr from-[#fcfdff] from-33% to-[#818dc0] to-100% bg-clip-text px-6 text-3xl font-bold text-transparent md:text-4xl"
+        class="font-heading bg-gradient-to-tr from-[#fcfdff] from-33% to-[#818dc0] to-100% bg-clip-text text-3xl font-bold text-transparent md:text-4xl"
       >
         Skills & Tools
       </h2>
-      <p class="font-body animate-fade-in mx-auto mt-3 max-w-2xl px-6 text-lg md:text-xl">
-        Some of the technologies and tools I work with regularly.
+      <p class="font-body mx-auto mt-3 max-w-2xl text-lg md:text-xl">
+        The technologies I use to build and ship products end to end.
       </p>
-      <div class="skills-container mt-16 md:mt-24">
-        <template v-if="isMobile">
-          <div class="skills-track double-lane">
-            <div
-              v-for="(skill, index) in topLaneSkillsLoop"
-              :key="'top-' + index"
-              class="skill-card group"
-            >
-              <div class="skill-card-face">
-                <Icon :name="skill.icon" size="20rem" />
-                <span class="font-heading mt-3 text-sm font-medium text-gray-300 md:text-base">
-                  {{ skill.name }}
-                </span>
-              </div>
-            </div>
-          </div>
-          <div class="skills-track double-lane reverse">
-            <div
-              v-for="(skill, index) in bottomLaneSkillsLoop"
-              :key="'bottom-' + index"
-              class="skill-card group"
-            >
-              <div class="skill-card-face">
-                <Icon :name="skill.icon" size="20rem" />
-                <span class="font-heading mt-3 text-sm font-medium text-gray-300 md:text-base">
-                  {{ skill.name }}
-                </span>
-              </div>
-            </div>
-          </div>
-        </template>
-        <template v-else>
-          <div class="skills-track">
-            <div v-for="(skill, index) in skills" :key="index" class="skill-card group">
-              <div class="skill-card-face">
-                <Icon :name="skill.icon" size="20rem" />
-                <span class="font-heading mt-3 text-sm font-medium text-gray-300 md:text-base">
-                  {{ skill.name }}
-                </span>
-              </div>
-            </div>
-          </div>
-        </template>
+
+      <div class="mt-14 grid gap-6 text-left md:mt-20 md:grid-cols-3">
+        <div
+          v-for="group in skillGroups"
+          :key="group.title"
+          class="skill-group rounded-2xl border border-white/10 bg-gray-900/60 p-6 backdrop-blur-sm"
+        >
+          <h3 class="font-heading mb-5 text-sm font-semibold tracking-widest text-sky-400 uppercase">
+            {{ group.title }}
+          </h3>
+          <ul class="grid grid-cols-2 gap-3">
+            <li v-for="skill in group.skills" :key="skill.name" class="skill-chip">
+              <Icon :name="skill.icon" size="1.75rem" class="shrink-0" />
+              <span class="font-heading truncate text-sm font-medium text-gray-200">
+                {{ skill.name }}
+              </span>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 </template>
+
 <style scoped>
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fade-in 1s ease-out forwards;
-}
-
-/* --- Mobile First: Carousel Styles (Default) --- */
-
-@keyframes carousel-scroll {
-  from {
-    transform: translateX(0);
-  }
-
-  to {
-    /* Moves the track left by the width of the original set of items */
-    transform: translateX(-50%);
-  }
-}
-
-.skills-container {
-  width: 100%;
-  /* Creates a fade-out effect on the left and right edges of the carousel */
-  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-}
-
-.skills-track {
+.skill-chip {
   display: flex;
-  gap: 1.5rem;
-  padding: 0 1rem;
-  width: max-content;
-  animation: carousel-scroll 40s linear infinite;
-}
-
-.skill-card {
-  flex-shrink: 0;
-  /* Prevents cards from shrinking */
-}
-
-.skill-card-face {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 140px;
-  /* Fixed width for carousel items */
-  height: 140px;
-  /* Fixed height for carousel items */
-  padding: 1rem;
+  gap: 0.625rem;
+  padding: 0.625rem 0.75rem;
   border-radius: 0.75rem;
-  background: linear-gradient(145deg, #374151, #1f2937);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(145deg, #1f2937, #111827);
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.skill-card:hover .skill-card-face {
-  transform: scale(1.05);
-  background: linear-gradient(to right, #38bdf8, #3b82f6);
-}
-
-.filter-glow {
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
-}
-
-/* --- Desktop Styles: 3D Isometric Grid (Applied on screens 768px and wider) --- */
-
-@media (min-width: 768px) {
-  /* Remove mobile-specific container styles */
-  .skills-container {
-    -webkit-mask-image: none;
-    mask-image: none;
-    perspective: 1200px;
-    /* Re-enable 3D perspective */
-  }
-
-  /* Stop the animation and switch to a grid layout */
-  .skills-track {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 3rem;
-    margin: 0px auto;
-    padding-left: 8em;
-    animation: none;
-    /* Disable carousel animation */
-    transform-style: preserve-3d;
-    transform: rotateX(45deg) rotateZ(315deg);
-    /* Isometric rotation */
-  }
-
-  @media (min-width: 1024px) {
-    .skills-track {
-      width: 35%;
-      grid-template-columns: repeat(5, 1fr);
-      margin: 0px auto;
-      padding: 0;
-    }
-  }
-
-  /* Re-enable 3D card styles */
-  .skill-card {
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  .skill-card-face {
-    transform: translateZ(4px);
-  }
-
-  .skill-card:hover .skill-card-face {
-    /* Override mobile hover effect */
-    transform: translateZ(4px);
-    /* Keep face in place */
-    background: linear-gradient(to right, #38bdf8, #3b82f6);
-  }
-
-  /* Add back the card "thickness" pseudo-element for the 3D effect */
-  .skill-card::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    border-radius: 0.75rem;
-    background: #111827;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    transform: translateZ(0);
-  }
-
-  /* Re-enable the 3D lift on hover */
-  .skill-card:hover {
-    transform: translateZ(25px);
-    cursor: pointer;
-  }
+.skill-chip:hover {
+  transform: translateY(-3px);
+  border-color: rgba(56, 189, 248, 0.6);
+  box-shadow: 0 8px 24px -8px rgba(56, 189, 248, 0.35);
 }
 
 .side-shadow {
   position: absolute;
-  top: 0;
-  bottom: 0;
+  top: 10%;
+  bottom: 10%;
   width: 260px;
-  z-index: 0;
   pointer-events: none;
   border-radius: 9999px;
   filter: blur(80px);
-  opacity: 0.55;
+  opacity: 0.35;
 }
 
 .side-shadow.left {
-  left: -130px;
+  left: -150px;
   background: radial-gradient(circle at left, #38bdf8 0%, transparent 80%);
 }
 
 .side-shadow.right {
-  right: -130px;
+  right: -150px;
   background: radial-gradient(circle at right, #818dc0 0%, transparent 80%);
 }
 
-.side-shadow.top {
-  top: 0;
-  left: 20%;
-  right: 0;
-  height: 260px;
-  background: radial-gradient(circle at top, #38bdf8 0%, transparent 80%);
-}
-
-.side-shadow.bottom {
-  bottom: 0;
-  height: 260px;
-  background: radial-gradient(circle at bottom, #818dc0 0%, transparent 80%);
-}
-
-@media (max-width: 767px) {
-  .skills-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    -webkit-mask-image: none;
-    mask-image: none;
+@media (prefers-reduced-motion: reduce) {
+  .skill-chip {
+    transition: none;
   }
-
-  .skills-track.double-lane {
-    display: flex;
-    gap: 1.5rem;
-    padding: 0 1rem;
-    width: max-content;
-    animation: carousel-scroll 40s linear infinite;
-  }
-
-  .skills-track.double-lane.reverse {
-    animation-direction: reverse;
-  }
-
-  .skills-track:not(.double-lane) {
-    display: none;
+  .skill-chip:hover {
+    transform: none;
   }
 }
 </style>

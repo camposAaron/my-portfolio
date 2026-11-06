@@ -73,16 +73,58 @@ export const projects: Project[] = [
     ],
   },
   {
-    // Hidden until it has a description and recordings.
-    id: 'autogestion-ai',
-    name: 'Autogestion AI mode',
-    public: false,
-    videos: [],
+    id: 'fastgym',
+    name: 'FastGym',
+    public: true,
+    tagline: 'Gym management, from the front desk to the cash count.',
+    summary:
+      'FastGym runs the day-to-day of a gym: members and memberships, payments, front-desk check-in, a point of sale, and cash register sessions. I built it as a multi-tenant web app with React, TypeScript, NestJS, Prisma, and PostgreSQL, and as an Electron edition that works offline with an embedded database.',
+    context:
+      'Each gym runs its own registers, plans, and staff roles. Every payment lands in an open cash session, which is counted and closed with a Z-report at the end of the shift. The recordings below show the dashboard, a sale at the point of sale, a new member with a first payment, and a check-in at the kiosk.',
+    features: [
+      'Members and membership plans',
+      'Payments in multiple currencies',
+      'Attendance kiosk with face recognition',
+      'Point of sale with split payments',
+      'Cash sessions with counts and Z-reports',
+      'Reports with CSV export',
+    ],
+    stack: ['React', 'TypeScript', 'NestJS', 'Prisma', 'PostgreSQL', 'Electron'],
+    videos: [
+      {
+        title: 'Dashboard and reports',
+        description: 'Daily indicators, recent activity, and reports by membership, sales, and attendance.',
+        src: '/projects/fg/dashboard.webm',
+        poster: '/projects/fg/dashboard-poster.jpg',
+        duration: '0:22',
+      },
+      {
+        title: 'Point of sale',
+        description: 'Opening a cash register and charging a sale in cash.',
+        src: '/projects/fg/pos.webm',
+        poster: '/projects/fg/pos-poster.jpg',
+        duration: '0:33',
+      },
+      {
+        title: 'New member and first payment',
+        description: 'Registering a member and charging the first membership into the open register.',
+        src: '/projects/fg/members.webm',
+        poster: '/projects/fg/members-poster.jpg',
+        duration: '0:40',
+      },
+      {
+        title: 'Front-desk check-in',
+        description: 'A manual check-in at the attendance kiosk, with the access result.',
+        src: '/projects/fg/attendance.webm',
+        poster: '/projects/fg/attendance-poster.jpg',
+        duration: '0:13',
+      },
+    ],
   },
   {
     // Hidden until it has a description and recordings.
-    id: 'fastgym',
-    name: 'FastGym',
+    id: 'autogestion-ai',
+    name: 'Autogestion AI mode',
     public: false,
     videos: [],
   },

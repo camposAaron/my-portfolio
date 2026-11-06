@@ -19,7 +19,7 @@ const handleSuccess = () => {
 <template>
   <section id="contact" class="contact" aria-labelledby="contact-heading">
     <div class="container contact__grid">
-      <div class="contact__aside">
+      <div class="contact__aside" v-reveal>
         <h2 id="contact-heading">Let’s talk about your team or project.</h2>
         <p class="contact__intro">
           If you’re hiring a software engineer, I’d like to hear what your team is building and where I could
@@ -45,7 +45,7 @@ const handleSuccess = () => {
         <ContactInfo />
       </div>
 
-      <div class="contact__main">
+      <div class="contact__main" v-reveal="1">
         <ContactForm @success="handleSuccess" />
         <SuccessMessage :show="isSuccess" />
       </div>

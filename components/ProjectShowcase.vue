@@ -2,8 +2,10 @@
 import { ref, computed, watch, nextTick, onMounted, onUnmounted } from 'vue'
 import type { Project } from '~/data/projects'
 
-const props = defineProps<{ project: Project; headingLevel?: 2 | 3 }>()
-const emit = defineEmits<{ openDialog: [src: string] }>()
+const props = defineProps<{ project: Project; index: number; total: number; prev?: Project; next?: Project }>()
+const emit = defineEmits<{ openDialog: [src: string]; go: [id: string] }>()
+
+const num = (i: number) => String(i + 1).padStart(2, '0')
 
 const selected = ref(0)
 const held = ref(false) // paused by the visitor (or by reduced motion)
@@ -11,7 +13,17 @@ const inView = ref(false)
 const videoRef = ref<HTMLVideoElement | null>(null)
 const stageRef = ref<HTMLElement | null>(null)
 const tabRefs = ref<HTMLButtonElement[]>([])
+const listRef = ref<HTMLElement | null>(null)
+// Position of the coral bar that slides to the active tab (left edge of the tab, any layout).
+const indicator = ref({ x: 0, y: 0, h: 0, ready: false })
 let io: IntersectionObserver | null = null
+let ro: ResizeObserver | null = null
+
+function placeIndicator() {
+  const tab = tabRefs.value[selected.value]
+  if (!tab) return
+  indicator.value = { x: tab.offsetLeft, y: tab.offsetTop, h: tab.offsetHeight, ready: true }
+}
 
 const current = computed(() => props.project.videos[selected.value])
 const uid = computed(() => `rec-${props.project.id}`)
@@ -43,27 +55,33 @@ function togglePlay() {
 }
 
 watch([selected, held, inView], sync)
+watch(selected, () => nextTick(placeIndicator))
 
 onMounted(() => {
   held.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   io = new IntersectionObserver(([entry]) => { inView.value = entry.isIntersecting }, { threshold: 0.35 })
   if (stageRef.value) io.observe(stageRef.value)
+  placeIndicator()
+  ro = new ResizeObserver(placeIndicator)
+  if (listRef.value) ro.observe(listRef.value)
 })
 
-onUnmounted(() => io?.disconnect())
+onUnmounted(() => {
+  io?.disconnect()
+  ro?.disconnect()
+})
 </script>
 
 <template>
   <article :id="`case-${project.id}`" class="showcase">
     <div class="showcase__head">
-      <div class="showcase__intro">
-        <p class="kicker">Selected work</p>
-        <h2 v-if="(headingLevel ?? 2) === 2" class="showcase__name">{{ project.name }}</h2>
-        <h3 v-else class="showcase__name">{{ project.name }}</h3>
+      <div class="showcase__intro" v-reveal>
+        <p class="kicker">Project {{ num(index) }} <span class="kicker__of">/ {{ num(total - 1) }}</span></p>
+        <h3 class="showcase__name">{{ project.name }}</h3>
         <p v-if="project.tagline" class="showcase__tagline">{{ project.tagline }}</p>
         <p v-if="project.summary" class="showcase__summary">{{ project.summary }}</p>
       </div>
-      <dl class="showcase__facts">
+      <dl class="showcase__facts" v-reveal="1">
         <div v-if="project.features?.length">
           <dt>What the platform covers</dt>
           <dd>
@@ -83,9 +101,9 @@ onUnmounted(() => io?.disconnect())
       </dl>
     </div>
 
-    <p v-if="project.context" class="showcase__context">{{ project.context }}</p>
+    <p v-if="project.context" class="showcase__context" v-reveal>{{ project.context }}</p>
 
-    <div v-if="project.videos.length" class="player">
+    <div v-if="project.videos.length" class="player" v-reveal>
       <div
         :id="`${uid}-panel`"
         ref="stageRef"
@@ -99,18 +117,20 @@ onUnmounted(() => io?.disconnect())
           :aria-label="`Open “${current.title}” larger, with video controls`"
           @click="emit('openDialog', current.src)"
         >
-          <video
-            :key="current.src"
-            ref="videoRef"
-            :src="current.src"
-            :poster="current.poster"
-            width="1280"
-            height="630"
-            muted
-            loop
-            playsinline
-            preload="metadata"
-          />
+          <Transition name="preview">
+            <video
+              :key="current.src"
+              ref="videoRef"
+              :src="current.src"
+              :poster="current.poster"
+              width="1280"
+              height="630"
+              muted
+              loop
+              playsinline
+              preload="metadata"
+            />
+          </Transition>
         </button>
         <div class="player__bar">
           <div class="player__now">
@@ -130,7 +150,13 @@ onUnmounted(() => io?.disconnect())
         </div>
       </div>
 
-      <div class="player__list" role="tablist" aria-label="Recordings" aria-orientation="vertical">
+      <div ref="listRef" class="player__list" role="tablist" aria-label="Recordings" aria-orientation="vertical">
+        <span
+          class="player__indicator"
+          :class="{ 'is-ready': indicator.ready }"
+          :style="{ transform: `translate(${indicator.x}px, ${indicator.y}px)`, height: `${indicator.h}px` }"
+          aria-hidden="true"
+        ></span>
         <button
           v-for="(video, i) in project.videos"
           :id="`${uid}-tab-${i}`"
@@ -155,5 +181,33 @@ onUnmounted(() => io?.disconnect())
         </button>
       </div>
     </div>
+
+    <nav v-if="prev || next" class="case-step" :aria-label="`After ${project.name}`">
+      <a
+        v-if="prev"
+        :href="`#case-${prev.id}`"
+        class="case-step__link case-step__link--prev"
+        @click.prevent="emit('go', prev.id)"
+      >
+        <Icon name="heroicons:arrow-left-20-solid" class="case-step__arrow" />
+        <span class="case-step__text">
+          <span class="case-step__label mono">Previous project · {{ num(index - 1) }}</span>
+          <span class="case-step__name">{{ prev.name }}</span>
+        </span>
+      </a>
+      <a
+        v-if="next"
+        :href="`#case-${next.id}`"
+        class="case-step__link case-step__link--next"
+        @click.prevent="emit('go', next.id)"
+      >
+        <span class="case-step__text">
+          <span class="case-step__label mono">Next project · {{ num(index + 1) }}</span>
+          <span class="case-step__name">{{ next.name }}</span>
+          <span v-if="next.tagline" class="case-step__tagline">{{ next.tagline }}</span>
+        </span>
+        <Icon name="heroicons:arrow-right-20-solid" class="case-step__arrow" />
+      </a>
+    </nav>
   </article>
 </template>

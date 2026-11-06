@@ -33,7 +33,7 @@ function toContact(event) {
 <template>
   <section id="services" class="services" aria-labelledby="services-heading">
     <div class="container services__grid">
-      <div class="services__head">
+      <div class="services__head" v-reveal>
         <h2 id="services-heading">Ways I can help</h2>
         <p>
           Alongside my search for a software engineering role, I’m open to discussing focused development
@@ -42,7 +42,7 @@ function toContact(event) {
         <a href="#contact" class="btn" @click="toContact">Discuss a project</a>
       </div>
       <ol class="services__list">
-        <li v-for="(service, i) in services" :key="service.title" class="service">
+        <li v-for="(service, i) in services" :key="service.title" v-reveal="i" class="service">
           <span class="service__num mono" aria-hidden="true">{{ String(i + 1).padStart(2, '0') }}</span>
           <h3>{{ service.title }}</h3>
           <p>{{ service.text }}</p>

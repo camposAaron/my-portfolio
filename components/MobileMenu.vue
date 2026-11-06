@@ -12,6 +12,10 @@ const props = defineProps({
     type: Function,
     required: false,
   },
+  activeHref: {
+    type: String,
+    default: '',
+  },
 })
 const emit = defineEmits(['update:mobileMenuOpen'])
 
@@ -44,6 +48,8 @@ function handleMenuClick(href) {
           v-for="link in navLinks"
           :key="link.href + '-mobile'"
           :href="link.href"
+          :class="{ 'is-active': activeHref === link.href }"
+          :aria-current="activeHref === link.href ? 'true' : undefined"
           @click.prevent="handleMenuClick(link.href)"
         >
           {{ link.text }}

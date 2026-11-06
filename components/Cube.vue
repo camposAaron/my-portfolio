@@ -58,9 +58,9 @@ import { useHeroMotion } from "~/composables/useHeroMotion"
 // --- Configuration ---
 const DEFAULT_ROTATE_X = -20
 const DEFAULT_ROTATE_Y = 30
-const RETURN_TRANSITION_DURATION = "0.6s"
+const RETURN_TRANSITION_DURATION = "0.9s"
 const DRAG_TRANSITION_DURATION = "0.05s"
-const RETURN_TRANSITION_TIMING = "cubic-bezier(0.23, 1, 0.32, 1)"
+const RETURN_TRANSITION_TIMING = "cubic-bezier(0.16, 1, 0.3, 1)"
 const sensitivity = 0.5
 
 // --- State ---

@@ -5,8 +5,8 @@ import { contact } from '~/data/contact'
 <template>
   <section id="about" class="about" aria-labelledby="about-heading">
     <div class="container about__grid">
-      <Picture class="picture-about" />
-      <div class="about__text">
+      <Picture class="picture-about" v-reveal />
+      <div class="about__text" v-reveal="1">
         <h2 id="about-heading">About me</h2>
         <div id="about-desc" class="about__copy">
           <p>

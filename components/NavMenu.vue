@@ -5,6 +5,8 @@
       :key="link.href"
       :href="link.href"
       :text="link.text"
+      :class="{ 'is-active': props.activeHref === link.href }"
+      :aria-current="props.activeHref === link.href ? 'true' : undefined"
       @click.prevent="props.scrollToSection ? props.scrollToSection(link.href) : null"
     />
   </nav>
@@ -18,6 +20,10 @@ const props = defineProps({
   scrollToSection: {
     type: Function,
     required: false,
+  },
+  activeHref: {
+    type: String,
+    default: '',
   },
 })
 </script>

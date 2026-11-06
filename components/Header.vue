@@ -1,7 +1,8 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 const mobileMenuOpen = ref(false)
+const activeHref = ref('')
 
 const navLinks = ref([
   { href: '#projects', text: 'Work' },
@@ -10,6 +11,27 @@ const navLinks = ref([
   { href: '#services', text: 'Services' },
   { href: '#contact', text: 'Contact' },
 ])
+
+// Current section: the one crossing a band just below the header.
+let sectionObserver = null
+onMounted(() => {
+  const visible = new Map()
+  sectionObserver = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) visible.set(e.target.id, e.isIntersecting)
+      const current = navLinks.value.find((l) => visible.get(l.href.slice(1)))
+      activeHref.value = current ? current.href : ''
+    },
+    { rootMargin: '-35% 0px -60% 0px' },
+  )
+  for (const l of navLinks.value) {
+    const el = document.getElementById(l.href.slice(1))
+    if (el) sectionObserver.observe(el)
+  }
+})
+onUnmounted(() => {
+  sectionObserver?.disconnect()
+})
 
 function scrollToSection(href) {
   const id = href.replace('#', '')
@@ -28,7 +50,7 @@ function scrollToSection(href) {
   <header class="bar">
     <div class="container bar__in">
       <Logo />
-      <NavMenu :navLinks="navLinks" :scrollToSection="scrollToSection" />
+      <NavMenu :navLinks="navLinks" :scrollToSection="scrollToSection" :activeHref="activeHref" />
       <div class="bar__toggle">
         <ToggleButton ariaLabel="Open the menu" @toggle="mobileMenuOpen = !mobileMenuOpen">
           <Icon name="heroicons:bars-3-16-solid" />
@@ -40,5 +62,6 @@ function scrollToSection(href) {
     v-model:mobileMenuOpen="mobileMenuOpen"
     :navLinks="navLinks"
     :scrollToSection="scrollToSection"
+    :activeHref="activeHref"
   />
 </template>

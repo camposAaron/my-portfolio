@@ -5,10 +5,11 @@
                 <Cube />
             </template>
         </Hero>
+        <!-- Offer first, then the work that backs it, then who is behind it. -->
+        <Services />
         <Projects />
         <About />
         <Skills />
-        <Services />
         <Contact />
     </main>
 </template>

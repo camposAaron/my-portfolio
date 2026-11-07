@@ -325,6 +325,10 @@ html:not(.js) [data-loop-toggle] { display: none; }
 .contact__aside h2 { max-width: 16ch; }
 .contact__intro { max-width: 56ch; color: var(--color-ink-2); font-size: var(--text-lead); line-height: 1.6; }
 .contact__resume { display: grid; gap: var(--space-xs); justify-items: start; }
+/* How a project starts: three short numbered steps in the site's mono voice */
+.contact__steps { display: grid; gap: var(--space-xs); margin: 0; padding: 0; list-style: none; counter-reset: step; }
+.contact__steps li { display: grid; grid-template-columns: 2.25rem minmax(0, 1fr); align-items: baseline; color: var(--color-ink); counter-increment: step; }
+.contact__steps li::before { content: counter(step, decimal-leading-zero); color: var(--color-accent); font: 400 var(--text-sm)/1 var(--font-outlier); }
 .contact-info { width: 100%; max-width: 30rem; }
 .contact-links { display: grid; gap: var(--space-xs); margin: 0; padding: 0; list-style: none; }
 .contact-link { display: flex; align-items: center; gap: var(--space-sm); padding: var(--space-xs) var(--space-sm); border: 1px solid var(--color-rule); border-radius: 12px; color: var(--color-ink); text-decoration: none; transition: border-color var(--dur-short) var(--ease-out), background-color var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out); }

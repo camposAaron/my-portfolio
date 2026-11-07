@@ -22,6 +22,9 @@ const handleSuccess = () => {
       <div class="contact__aside" v-reveal>
         <h2 id="contact-heading">{{ $t('contactSection.title') }}</h2>
         <p class="contact__intro">{{ $t('contactSection.intro') }}</p>
+        <ol class="contact__steps">
+          <li v-for="step in ['share', 'reply', 'start']" :key="step">{{ $t(`contactSection.steps.${step}`) }}</li>
+        </ol>
         <div class="contact__resume">
           <button
             type="button"
@@ -34,10 +37,10 @@ const handleSuccess = () => {
             {{ loading ? $t('resume.opening') : $t('resume.download') }}
           </button>
           <p v-if="failed" class="hero__error" role="alert">
-          <i18n-t keypath="resume.failed">
-            <template #email><a class="link" :href="`mailto:${contact.email}`">{{ contact.email }}</a></template>
-          </i18n-t>
-        </p>
+            <i18n-t keypath="resume.failed">
+              <template #email><a class="link" :href="`mailto:${contact.email}`">{{ contact.email }}</a></template>
+            </i18n-t>
+          </p>
         </div>
         <ContactInfo />
       </div>

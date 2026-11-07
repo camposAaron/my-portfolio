@@ -1,6 +1,6 @@
 {
   "meta": {
-    "description": "Aaron Campos, ingeniero de software en Managua, Nicaragua: aplicaciones web, servicios backend e infraestructura en la nube. Disponible para oportunidades en ingeniería de software."
+    "description": "Aaron Campos, ingeniero de software en Managua, Nicaragua. Desarrollo aplicaciones web, servicios backend e infraestructura en la nube para negocios: herramientas internas, plataformas de autogestión y los sistemas que las sostienen."
   },
   "common": {
     "skip": "Saltar al contenido",
@@ -11,7 +11,7 @@
   },
   "contact": {
     "role": "Ingeniero de software",
-    "status": "Disponible para oportunidades en ingeniería de software"
+    "status": "Disponible para nuevos proyectos"
   },
   "nav": {
     "label": "Secciones",
@@ -36,8 +36,8 @@
     "line1": "Aplicaciones web.",
     "line2": "Servicios backend.",
     "line3": "Infraestructura en la nube.",
-    "intro": "Soy ingeniero de software en Managua, Nicaragua, con más de 3 años de experiencia desarrollando aplicaciones web. Mi trabajo abarca interfaces, servicios backend y tecnologías en la nube, incluida una plataforma de autogestión para empleados con documentos de nómina, solicitudes de permisos y flujos internos.",
-    "viewWork": "Ver mis proyectos"
+    "intro": "Desarrollo software para negocios: herramientas internas, plataformas de autogestión y el backend y la infraestructura en la nube que las sostienen. Desde Managua, Nicaragua, con más de 3 años entregando aplicaciones web que los equipos usan todos los días.",
+    "startProject": "Empecemos un proyecto"
   },
   "cube": {
     "label": "Un cubo de comandos de terminal: kubectl, docker-compose, git y aws. Arrástralo para girarlo.",
@@ -62,7 +62,7 @@
   "about": {
     "title": "Sobre mí",
     "p1": "Soy ingeniero en sistemas y trabajo en desarrollo de software, con experiencia en frontend, backend y tecnologías en la nube. Mi trabajo incluye software de autogestión para empleados, donde las interfaces y los servicios resuelven tareas concretas como descargar documentos de nómina, solicitar permisos y gestionar información interna.",
-    "p2": "Mis herramientas principales son TypeScript, Vue.js, Node.js y PostgreSQL, junto con AWS, Docker y Kubernetes. Busco un puesto en ingeniería de software donde pueda aportar a productos útiles y seguir desarrollando mis habilidades en infraestructura en la nube y automatización.",
+    "p2": "Mis herramientas principales son TypeScript, Vue.js, Node.js y PostgreSQL, junto con AWS, Docker y Kubernetes. Trabajo directamente con negocios y equipos en proyectos concretos, desde una herramienta interna hasta una plataforma que necesita su backend, sus datos y su despliegue bien resueltos.",
     "based": "Vivo en {location}",
     "years": "Más de 3 años en desarrollo de software",
     "photoAlt": "Aaron Campos en su escritorio, con código en el monitor detrás de él"
@@ -91,8 +91,8 @@
     }
   },
   "services": {
-    "title": "Cómo puedo ayudar",
-    "intro": "Mientras busco un puesto en ingeniería de software, estoy abierto a conversar sobre proyectos de desarrollo puntuales. Estas son las áreas donde mi experiencia actual puede aportar.",
+    "title": "Qué puedo construir para ti",
+    "intro": "Tomo proyectos de desarrollo con un alcance claro y trabajo contigo directamente, desde la primera conversación hasta el despliegue. Estos son los servicios que ofrezco.",
     "cta": "Conversemos sobre un proyecto",
     "items": {
       "webapps": {
@@ -105,7 +105,7 @@
       },
       "cloud": {
         "title": "Despliegue en la nube y contenedores",
-        "text": "Ayudar a preparar y desplegar aplicaciones web con AWS y herramientas basadas en contenedores, con un alcance definido según los requisitos de la aplicación."
+        "text": "Preparar y desplegar aplicaciones web en AWS con contenedores, a la medida de lo que la aplicación realmente necesita para funcionar."
       },
       "automation": {
         "title": "Automatización de procesos",
@@ -114,8 +114,13 @@
     }
   },
   "contactSection": {
-    "title": "Hablemos de tu equipo o proyecto.",
-    "intro": "Si estás contratando a un ingeniero de software, me gustaría saber qué está construyendo tu equipo y dónde podría aportar. Si se trata de un proyecto, cuéntame qué flujo quieres mejorar, qué sistema tienes hoy y qué alcance tienes en mente.",
+    "title": "Cuéntame de tu proyecto.",
+    "intro": "Cuéntame qué flujo quieres mejorar, qué sistema tienes hoy y qué alcance tienes en mente. Con unas pocas líneas basta para empezar.",
+    "steps": {
+      "share": "Me cuentas lo que necesitas.",
+      "reply": "Te respondo con mis preguntas y cómo lo abordaría.",
+      "start": "Acordamos alcance y tiempos, y me pongo a trabajar."
+    },
     "whatsapp": "Escríbeme por WhatsApp"
   },
   "form": {

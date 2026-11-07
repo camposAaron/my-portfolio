@@ -1,6 +1,6 @@
 {
   "meta": {
-    "description": "Aaron Campos, software engineer in Managua, Nicaragua: web applications, backend services and cloud infrastructure. Open to software engineering opportunities."
+    "description": "Aaron Campos, software engineer in Managua, Nicaragua. I build web applications, backend services and cloud infrastructure for businesses: internal tools, self-service platforms and the systems behind them."
   },
   "common": {
     "skip": "Skip to content",
@@ -11,7 +11,7 @@
   },
   "contact": {
     "role": "Software Engineer",
-    "status": "Open to software engineering opportunities"
+    "status": "Taking on new projects"
   },
   "nav": {
     "label": "Sections",
@@ -36,8 +36,8 @@
     "line1": "Web applications.",
     "line2": "Backend services.",
     "line3": "Cloud infrastructure.",
-    "intro": "I’m a software engineer based in Managua, Nicaragua, with 3+ years of experience building web applications. My work spans interfaces, backend services, and cloud technologies, including an employee self-service platform for payroll documents, leave requests, and internal workflows.",
-    "viewWork": "View my work"
+    "intro": "I build software for businesses: internal tools, self-service platforms, and the backend and cloud infrastructure behind them. From Managua, Nicaragua, with 3+ years of experience shipping web applications that teams use every day.",
+    "startProject": "Start a project"
   },
   "cube": {
     "label": "A cube of shell commands: kubectl, docker-compose, git and aws. Drag it to turn it.",
@@ -62,7 +62,7 @@
   "about": {
     "title": "About me",
     "p1": "I’m a systems engineer working in software development, with experience across frontend, backend, and cloud technologies. My work includes employee self-service software, where interfaces and services support specific tasks such as downloading payroll documents, requesting leave, and managing internal information.",
-    "p2": "My main tools include TypeScript, Vue.js, Node.js, and PostgreSQL, alongside AWS, Docker, and Kubernetes. I’m looking for a software engineering role where I can contribute to useful products and continue developing my skills in cloud infrastructure and automation.",
+    "p2": "My main tools include TypeScript, Vue.js, Node.js, and PostgreSQL, alongside AWS, Docker, and Kubernetes. I work directly with businesses and teams on focused projects, from a single internal tool to a platform that needs its backend, data, and deployment set up properly.",
     "based": "Based in {location}",
     "years": "3+ years in software development",
     "photoAlt": "Aaron Campos at his desk, with code on the monitor behind him"
@@ -91,8 +91,8 @@
     }
   },
   "services": {
-    "title": "Ways I can help",
-    "intro": "Alongside my search for a software engineering role, I’m open to discussing focused development projects. These are the areas where my current experience can contribute.",
+    "title": "What I can build for you",
+    "intro": "I take on development projects with a clear scope and work with you directly, from the first conversation to the deployment. These are the services I offer.",
     "cta": "Discuss a project",
     "items": {
       "webapps": {
@@ -105,7 +105,7 @@
       },
       "cloud": {
         "title": "Cloud deployment & containers",
-        "text": "Help prepare and deploy web applications using AWS and container-based tooling, with the scope defined around the application’s requirements."
+        "text": "Prepare and deploy web applications on AWS with containers, sized to what the application actually needs to run."
       },
       "automation": {
         "title": "Workflow automation",
@@ -114,8 +114,13 @@
     }
   },
   "contactSection": {
-    "title": "Let’s talk about your team or project.",
-    "intro": "If you’re hiring a software engineer, I’d like to hear what your team is building and where I could contribute. For project work, tell me about the workflow you want to improve, the system you already have, and the scope you have in mind.",
+    "title": "Tell me about your project.",
+    "intro": "Tell me about the workflow you want to improve, the system you already have, and the scope you have in mind. A few lines are enough to start.",
+    "steps": {
+      "share": "You tell me what you need.",
+      "reply": "I reply with my questions and how I would approach it.",
+      "start": "We agree on scope and timeline, and I get to work."
+    },
     "whatsapp": "Message me on WhatsApp"
   },
   "form": {

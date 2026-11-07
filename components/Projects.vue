@@ -50,8 +50,8 @@ onUnmounted(() => io?.disconnect())
 <template>
   <section id="projects" class="projects" aria-labelledby="work-title">
     <div class="container work__head" v-reveal>
-      <p class="kicker">Selected work</p>
-      <h2 id="work-title">Products I've shipped, recorded in use.</h2>
+      <p class="kicker">{{ $t('projects.kicker') }}</p>
+      <h2 id="work-title">{{ $t('projects.title') }}</h2>
     </div>
 
     <ProjectNav v-if="publicProjects.length > 1" :projects="publicProjects" :active="active" @go="goTo" />

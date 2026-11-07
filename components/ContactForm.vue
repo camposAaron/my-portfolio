@@ -17,10 +17,14 @@ const formData = reactive({
 const errors = reactive({})
 const isSubmitting = ref(false)
 
+// Validation messages are i18n keys; the template translates them, so they follow a language switch.
+const { t } = useI18n()
+const errorText = (key) => (key ? t(key) : '')
+
 const contactSchema = yup.object().shape({
-  name: yup.string().required('Name is required'),
-  email: yup.string().email('Invalid email format').required('Email is required'),
-  message: yup.string().required('Message is required'),
+  name: yup.string().required('form.errors.nameRequired'),
+  email: yup.string().email('form.errors.emailInvalid').required('form.errors.emailRequired'),
+  message: yup.string().required('form.errors.messageRequired'),
   phoneNumber: yup.string().optional(),
 })
 
@@ -69,15 +73,15 @@ const handleSubmit = async () => {
 </script>
 <template>
   <form @submit.prevent="handleSubmit" class="form contact-form" novalidate>
-    <FormField v-model="formData.name" label="Name *" type="text" id="name" autocomplete="name" :error="errors.name" />
+    <FormField v-model="formData.name" :label="$t('form.name')" type="text" id="name" autocomplete="name" :error="errorText(errors.name)" />
 
-    <FormField v-model="formData.email" label="Email *" type="email" id="email" autocomplete="email" :error="errors.email" />
+    <FormField v-model="formData.email" :label="$t('form.email')" type="email" id="email" autocomplete="email" :error="errorText(errors.email)" />
 
-    <FormField v-model="formData.message" label="Message *" type="textarea" id="message" :error="errors.message"
+    <FormField v-model="formData.message" :label="$t('form.message')" type="textarea" id="message" :error="errorText(errors.message)"
       :rows="5" />
 
     <button type="submit" :disabled="isSubmitting" :aria-busy="isSubmitting ? 'true' : undefined" class="btn btn--primary">
-      {{ isSubmitting ? 'Sending…' : 'Send message' }}
+      {{ isSubmitting ? $t('form.sending') : $t('form.send') }}
     </button>
   </form>
 </template>

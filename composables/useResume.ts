@@ -17,7 +17,7 @@ export function useResume() {
       const response = await $fetch<string>(RESUME_ENDPOINT)
       const data = typeof response === 'string' ? JSON.parse(response) : response
       const resumeUrl = data.resumeUrl
-      if (!resumeUrl) throw new Error('No résumé URL in the response')
+      if (!resumeUrl) throw new Error('No resume URL in the response')
 
       const opened = window.open(resumeUrl, '_blank')
       // A blocked pop-up returns null: open it in this tab instead.

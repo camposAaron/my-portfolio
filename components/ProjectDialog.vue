@@ -5,14 +5,14 @@
       class="dialog"
       role="dialog"
       aria-modal="true"
-      aria-label="Project recording"
+      :aria-label="$t('projects.dialogLabel')"
       @click.self="$emit('closeDialog')"
       @keydown.esc="$emit('closeDialog')"
     >
       <div class="dialog__box">
         <button ref="closeRef" type="button" class="btn btn--quiet" @click="$emit('closeDialog')">
           <Icon name="heroicons:x-mark-20-solid" />
-          Close
+          {{ $t('common.close') }}
         </button>
         <video
           :src="selectedImage"

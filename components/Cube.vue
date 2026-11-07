@@ -6,7 +6,7 @@
         class="cube-container"
         :class="{ 'is-dragging': isDragging }"
         role="img"
-        aria-label="A cube of shell commands: kubectl, docker-compose, git and aws. Drag it to turn it."
+        :aria-label="$t('cube.label')"
         @pointerdown="handleMouseDown"
       >
         <div class="idle-rotator" :class="{ 'is-held': !isIdle }">
@@ -42,9 +42,9 @@
       </div>
     </div>
     <figcaption>
-      <span>Drag to turn it</span>
+      <span>{{ $t('cube.hint') }}</span>
       <button type="button" class="btn btn--quiet" data-loop-toggle @click="toggle">
-        {{ held ? 'Play' : 'Pause' }}
+        {{ held ? $t('common.play') : $t('common.pause') }}
       </button>
     </figcaption>
   </figure>

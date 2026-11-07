@@ -81,6 +81,13 @@ html:not(.js) [data-loop-toggle] { display: none; }
 .icon-btn:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
 .icon-btn svg { width: 20px; height: 20px; }
 
+/* Language switch: sits at the end of the bar, beside the menu button on small screens. */
+.bar__end { display: flex; align-items: center; gap: var(--space-xs); }
+.lang { display: inline-flex; align-items: center; gap: var(--space-2xs); min-height: 44px; padding-inline: var(--space-sm); border: 1px solid var(--color-rule-2); border-radius: 10px; color: var(--color-ink-2); font-size: var(--text-xs); text-decoration: none; transition: color var(--dur-short) var(--ease-out), background-color var(--dur-short) var(--ease-out); }
+.lang:hover { color: var(--color-ink); background: var(--color-surface); }
+.lang:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.lang svg { width: 18px; height: 18px; }
+
 /* Mobile menu */
 .menu { position: fixed; inset: 0; z-index: var(--z-modal); display: grid; grid-template-rows: auto 1fr; background: var(--color-paper); }
 .menu__top { display: flex; align-items: center; justify-content: space-between; min-height: var(--bar-h); padding-inline: var(--gutter); border-bottom: 1px solid var(--color-rule); }
@@ -419,6 +426,6 @@ html:not(.js) [data-loop-toggle] { display: none; }
   .work-nav, .work-nav__link, .work-nav__num, .work-nav__indicator, .case-step__link, .case-step__arrow { transition: none; }
   .case-step__link:hover .case-step__arrow, .case-step__link:focus-visible .case-step__arrow { transform: none; }
   .rec:hover, .rec:focus-visible, .contact-link:hover, .contact-link:focus-visible, .social:hover, .social:focus-visible { transform: none; }
-  .btn, .link, .nav a, .nav a::after, .wordmark, .wordmark img, .icon-btn, .social, .rec, .contact-link, .menu__links a { transition: none; }
+  .btn, .link, .nav a, .nav a::after, .wordmark, .wordmark img, .icon-btn, .lang, .social, .rec, .contact-link, .menu__links a { transition: none; }
   .menu-enter-active, .menu-leave-active, .fade-enter-active, .fade-leave-active { transition: none; }
 }

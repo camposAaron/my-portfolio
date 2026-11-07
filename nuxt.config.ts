@@ -8,8 +8,24 @@ export default defineNuxtConfig({
     '@nuxt/fonts',
     '@nuxt/icon',
     '@nuxt/image',
-    '@nuxtjs/google-fonts'
+    '@nuxtjs/google-fonts',
+    '@nuxtjs/i18n',
   ],
+  i18n: {
+    // English stays at /, Spanish lives at /es.
+    strategy: 'prefix_except_default',
+    defaultLocale: 'en',
+    locales: [
+      { code: 'en', language: 'en-US', name: 'English' },
+      { code: 'es', language: 'es-NI', name: 'Español' },
+    ],
+    // First visit to /: send Spanish-speaking browsers to /es once, then respect the choice.
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_locale',
+      redirectOn: 'root',
+    },
+  },
   css: ['~/assets/css/main.css'],
   vite: {
     plugins: [tailwindcss()],
@@ -17,10 +33,6 @@ export default defineNuxtConfig({
   app: {
     head:{
       title: "</AaronDev>",
-      htmlAttrs: { lang: 'en' },
-      meta: [
-        { name: 'description', content: 'Aaron Campos, software engineer in Managua, Nicaragua: web applications, backend services and cloud infrastructure. Open to software engineering opportunities.' },
-      ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico?v=coral-ac-1', sizes: '16x16 32x32 48x48 64x64 128x128 256x256' },
         { rel: 'icon', type: 'image/png', href: '/favicon-32.png?v=coral-ac-1', sizes: '32x32' },

@@ -1,0 +1,135 @@
+{
+  "meta": {
+    "description": "Aaron Campos, software engineer in Managua, Nicaragua: web applications, backend services and cloud infrastructure. Open to software engineering opportunities."
+  },
+  "common": {
+    "skip": "Skip to content",
+    "play": "Play",
+    "pause": "Pause",
+    "close": "Close",
+    "expand": "Expand"
+  },
+  "contact": {
+    "role": "Software Engineer",
+    "status": "Open to software engineering opportunities"
+  },
+  "nav": {
+    "label": "Sections",
+    "work": "Work",
+    "about": "About",
+    "skills": "Skills",
+    "services": "Services",
+    "contact": "Contact",
+    "openMenu": "Open the menu",
+    "closeMenu": "Close the menu",
+    "menu": "Menu",
+    "logo": "AaronDEV, back to the top",
+    "language": "Language",
+    "switchTo": "Ver en español"
+  },
+  "resume": {
+    "download": "Download resume",
+    "opening": "Opening…",
+    "failed": "The resume didn’t open. Try again, or write to {email}."
+  },
+  "hero": {
+    "line1": "Web applications.",
+    "line2": "Backend services.",
+    "line3": "Cloud infrastructure.",
+    "intro": "I’m a software engineer based in Managua, Nicaragua, with 3+ years of experience building web applications. My work spans interfaces, backend services, and cloud technologies, including an employee self-service platform for payroll documents, leave requests, and internal workflows.",
+    "viewWork": "View my work"
+  },
+  "cube": {
+    "label": "A cube of shell commands: kubectl, docker-compose, git and aws. Drag it to turn it.",
+    "hint": "Drag to turn it"
+  },
+  "projects": {
+    "kicker": "Selected work",
+    "title": "Products I've shipped, recorded in use.",
+    "navLabel": "Projects",
+    "recordings": "no recordings | 1 recording | {n} recordings",
+    "project": "Project",
+    "covers": "What the platform covers",
+    "stack": "Stack",
+    "technologies": "Technologies",
+    "openLarger": "Open “{title}” larger, with video controls",
+    "recordingsLabel": "Recordings",
+    "dialogLabel": "Project recording",
+    "after": "After {name}",
+    "previous": "Previous project",
+    "next": "Next project"
+  },
+  "about": {
+    "title": "About me",
+    "p1": "I’m a systems engineer working in software development, with experience across frontend, backend, and cloud technologies. My work includes employee self-service software, where interfaces and services support specific tasks such as downloading payroll documents, requesting leave, and managing internal information.",
+    "p2": "My main tools include TypeScript, Vue.js, Node.js, and PostgreSQL, alongside AWS, Docker, and Kubernetes. I’m looking for a software engineering role where I can contribute to useful products and continue developing my skills in cloud infrastructure and automation.",
+    "based": "Based in {location}",
+    "years": "3+ years in software development",
+    "photoAlt": "Aaron Campos at his desk, with code on the monitor behind him"
+  },
+  "skills": {
+    "title": "From interface to infrastructure",
+    "lead": "My experience connects the application layer with the services and infrastructure behind it.",
+    "flowLabel": "How the layers connect: Frontend to Backend to Cloud",
+    "tools": "{group} tools",
+    "groups": {
+      "frontend": {
+        "title": "Frontend development",
+        "layer": "Interface",
+        "description": "Web interfaces for forms, dashboards, and employee workflows."
+      },
+      "backend": {
+        "title": "Backend development",
+        "layer": "Services",
+        "description": "Services and data handling behind application features and business processes."
+      },
+      "cloud": {
+        "title": "Cloud & delivery",
+        "layer": "Infrastructure",
+        "description": "Cloud and container technologies used alongside application development."
+      }
+    }
+  },
+  "services": {
+    "title": "Ways I can help",
+    "intro": "Alongside my search for a software engineering role, I’m open to discussing focused development projects. These are the areas where my current experience can contribute.",
+    "cta": "Discuss a project",
+    "items": {
+      "webapps": {
+        "title": "Business web applications",
+        "text": "Build or extend internal tools, dashboards, and self-service applications for specific business workflows, using Vue.js, TypeScript, and a Node.js backend."
+      },
+      "backend": {
+        "title": "Backend services & integrations",
+        "text": "Develop APIs and backend features, connect application components, and work with PostgreSQL to support the data behind business processes."
+      },
+      "cloud": {
+        "title": "Cloud deployment & containers",
+        "text": "Help prepare and deploy web applications using AWS and container-based tooling, with the scope defined around the application’s requirements."
+      },
+      "automation": {
+        "title": "Workflow automation",
+        "text": "Identify repetitive steps in an existing process and build focused tools or integrations to reduce manual handling."
+      }
+    }
+  },
+  "contactSection": {
+    "title": "Let’s talk about your team or project.",
+    "intro": "If you’re hiring a software engineer, I’d like to hear what your team is building and where I could contribute. For project work, tell me about the workflow you want to improve, the system you already have, and the scope you have in mind.",
+    "whatsapp": "Message me on WhatsApp"
+  },
+  "form": {
+    "name": "Name *",
+    "email": "Email *",
+    "message": "Message *",
+    "send": "Send message",
+    "sending": "Sending…",
+    "sent": "Message sent. Thanks for writing.",
+    "errors": {
+      "nameRequired": "Name is required",
+      "emailInvalid": "Invalid email format",
+      "emailRequired": "Email is required",
+      "messageRequired": "Message is required"
+    }
+  }
+}

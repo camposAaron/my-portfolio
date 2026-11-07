@@ -1,15 +1,16 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 
+const { t } = useI18n()
 const mobileMenuOpen = ref(false)
 const activeHref = ref('')
 
-const navLinks = ref([
-  { href: '#projects', text: 'Work' },
-  { href: '#about', text: 'About' },
-  { href: '#skills', text: 'Skills' },
-  { href: '#services', text: 'Services' },
-  { href: '#contact', text: 'Contact' },
+const navLinks = computed(() => [
+  { href: '#projects', text: t('nav.work') },
+  { href: '#about', text: t('nav.about') },
+  { href: '#skills', text: t('nav.skills') },
+  { href: '#services', text: t('nav.services') },
+  { href: '#contact', text: t('nav.contact') },
 ])
 
 // Current section: the one crossing a band just below the header.
@@ -51,10 +52,13 @@ function scrollToSection(href) {
     <div class="container bar__in">
       <Logo />
       <NavMenu :navLinks="navLinks" :scrollToSection="scrollToSection" :activeHref="activeHref" />
-      <div class="bar__toggle">
-        <ToggleButton ariaLabel="Open the menu" @toggle="mobileMenuOpen = !mobileMenuOpen">
-          <Icon name="heroicons:bars-3-16-solid" />
-        </ToggleButton>
+      <div class="bar__end">
+        <LangSwitch />
+        <div class="bar__toggle">
+          <ToggleButton :ariaLabel="$t('nav.openMenu')" @toggle="mobileMenuOpen = !mobileMenuOpen">
+            <Icon name="heroicons:bars-3-16-solid" />
+          </ToggleButton>
+        </div>
       </div>
     </div>
   </header>

@@ -22,21 +22,17 @@ function viewWork(event) {
       <div class="hero__text">
         <p class="hero__id">
           <span class="hero__name">{{ contact.name }}</span>
-          <span class="hero__role">· {{ contact.role }}</span>
+          <span class="hero__role">· {{ $t('contact.role') }}</span>
         </p>
         <h1 id="greeting">
-          Web applications.<br />
-          Backend services.<br />
-          Cloud infrastructure.
+          {{ $t('hero.line1') }}<br />
+          {{ $t('hero.line2') }}<br />
+          {{ $t('hero.line3') }}
         </h1>
-        <p class="hero__intro">
-          I’m a software engineer based in Managua, Nicaragua, with 3+ years of experience building web
-          applications. My work spans interfaces, backend services, and cloud technologies, including an
-          employee self-service platform for payroll documents, leave requests, and internal workflows.
-        </p>
-        <p class="status"><span class="status__dot" aria-hidden="true"></span>{{ contact.status }}</p>
+        <p class="hero__intro">{{ $t('hero.intro') }}</p>
+        <p class="status"><span class="status__dot" aria-hidden="true"></span>{{ $t('contact.status') }}</p>
         <div class="hero__actions">
-          <a href="#projects" class="btn btn--primary" @click="viewWork">View my work</a>
+          <a href="#projects" class="btn btn--primary" @click="viewWork">{{ $t('hero.viewWork') }}</a>
           <button
             type="button"
             class="btn"
@@ -45,13 +41,14 @@ function viewWork(event) {
             @click="openResume"
           >
             <Icon name="heroicons:arrow-down-tray-20-solid" />
-            {{ loading ? 'Opening…' : 'Download résumé' }}
+            {{ loading ? $t('resume.opening') : $t('resume.download') }}
           </button>
           <SocialLinks />
         </div>
         <p v-if="failed" class="hero__error" role="alert">
-          The résumé didn’t open. Try again, or write to
-          <a class="link" :href="`mailto:${contact.email}`">{{ contact.email }}</a>.
+          <i18n-t keypath="resume.failed">
+            <template #email><a class="link" :href="`mailto:${contact.email}`">{{ contact.email }}</a></template>
+          </i18n-t>
         </p>
       </div>
       <div id="cubeSlot">

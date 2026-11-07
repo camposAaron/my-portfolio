@@ -1,5 +1,5 @@
 <template>
-  <nav class="nav" aria-label="Sections">
+  <nav class="nav" :aria-label="$t('nav.label')">
     <NavLink
       v-for="link in navLinks"
       :key="link.href"

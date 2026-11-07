@@ -70,7 +70,7 @@ onUnmounted(() => {
 
 <template>
   <div ref="sentinel" class="work-nav__sentinel" aria-hidden="true"></div>
-  <nav class="work-nav" :class="{ 'is-stuck': stuck }" aria-label="Projects">
+  <nav class="work-nav" :class="{ 'is-stuck': stuck }" :aria-label="$t('projects.navLabel')">
     <div class="container work-nav__in">
       <ol ref="listRef" class="work-nav__list">
         <li v-for="(project, i) in projects" :key="project.id">
@@ -84,7 +84,7 @@ onUnmounted(() => {
           >
             <span class="work-nav__num mono">{{ num(i) }}</span>
             <span class="work-nav__name">{{ project.name }}</span>
-            <span class="work-nav__meta mono">{{ project.videos.length }} recordings</span>
+            <span class="work-nav__meta mono">{{ $t('projects.recordings', project.videos.length) }}</span>
           </a>
         </li>
         <!-- Inside the list so it scrolls with the links on narrow screens. -->

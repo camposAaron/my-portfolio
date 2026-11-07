@@ -1,23 +1,7 @@
 <script setup>
 // Scopes of work on offer, not a record of past contracts.
-const services = [
-  {
-    title: 'Business web applications',
-    text: 'Build or extend internal tools, dashboards, and self-service applications for specific business workflows, using Vue.js, TypeScript, and a Node.js backend.',
-  },
-  {
-    title: 'Backend services & integrations',
-    text: 'Develop APIs and backend features, connect application components, and work with PostgreSQL to support the data behind business processes.',
-  },
-  {
-    title: 'Cloud deployment & containers',
-    text: 'Help prepare and deploy web applications using AWS and container-based tooling, with the scope defined around the application’s requirements.',
-  },
-  {
-    title: 'Workflow automation',
-    text: 'Identify repetitive steps in an existing process and build focused tools or integrations to reduce manual handling.',
-  },
-]
+// Text for each one lives under services.items.<key> in i18n/locales.
+const services = ['webapps', 'backend', 'cloud', 'automation']
 
 function toContact(event) {
   const el = document.getElementById('contact')
@@ -34,18 +18,15 @@ function toContact(event) {
   <section id="services" class="services" aria-labelledby="services-heading">
     <div class="container services__grid">
       <div class="services__head" v-reveal>
-        <h2 id="services-heading">Ways I can help</h2>
-        <p>
-          Alongside my search for a software engineering role, I’m open to discussing focused development
-          projects. These are the areas where my current experience can contribute.
-        </p>
-        <a href="#contact" class="btn" @click="toContact">Discuss a project</a>
+        <h2 id="services-heading">{{ $t('services.title') }}</h2>
+        <p>{{ $t('services.intro') }}</p>
+        <a href="#contact" class="btn" @click="toContact">{{ $t('services.cta') }}</a>
       </div>
       <ol class="services__list">
-        <li v-for="(service, i) in services" :key="service.title" v-reveal="i" class="service">
+        <li v-for="(service, i) in services" :key="service" v-reveal="i" class="service">
           <span class="service__num mono" aria-hidden="true">{{ String(i + 1).padStart(2, '0') }}</span>
-          <h3>{{ service.title }}</h3>
-          <p>{{ service.text }}</p>
+          <h3>{{ $t(`services.items.${service}.title`) }}</h3>
+          <p>{{ $t(`services.items.${service}.text`) }}</p>
         </li>
       </ol>
     </div>

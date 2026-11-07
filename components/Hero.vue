@@ -4,8 +4,9 @@ import { useResume } from '~/composables/useResume'
 
 const { openResume, loading, failed } = useResume()
 
-function viewWork(event) {
-  const el = document.getElementById('projects')
+// Same behaviour as the header links: smooth unless reduced motion, then move focus there.
+function goTo(event, id) {
+  const el = document.getElementById(id)
   if (!el) return
   event.preventDefault()
   const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -32,7 +33,7 @@ function viewWork(event) {
         <p class="hero__intro">{{ $t('hero.intro') }}</p>
         <p class="status"><span class="status__dot" aria-hidden="true"></span>{{ $t('contact.status') }}</p>
         <div class="hero__actions">
-          <a href="#projects" class="btn btn--primary" @click="viewWork">{{ $t('hero.viewWork') }}</a>
+          <a href="#contact" class="btn btn--primary" @click="goTo($event, 'contact')">{{ $t('hero.startProject') }}</a>
           <button
             type="button"
             class="btn"

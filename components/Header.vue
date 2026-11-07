@@ -6,10 +6,10 @@ const mobileMenuOpen = ref(false)
 const activeHref = ref('')
 
 const navLinks = computed(() => [
+  { href: '#services', text: t('nav.services') },
   { href: '#projects', text: t('nav.work') },
   { href: '#about', text: t('nav.about') },
   { href: '#skills', text: t('nav.skills') },
-  { href: '#services', text: t('nav.services') },
   { href: '#contact', text: t('nav.contact') },
 ])
 

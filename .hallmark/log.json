@@ -1,0 +1,31 @@
+[
+ {
+  "mode": "redesign",
+  "depth": "full",
+  "scope": "page",
+  "shape": "Bento Grid (narrowed to the pinned project case)",
+  "theme": "console",
+  "axes": "dark/grotesk-sans/chromatic-amber",
+  "hero": "Settled",
+  "nav": "banner over a retracting bar",
+  "footer": "letter close",
+  "imagery": "product recordings 3 (owner), portrait slot 1",
+  "photos": [],
+  "entry": "none",
+  "fingerprint": "settled/index+pinned-case/rows/form/letter",
+  "sections": [
+   "Hero (cube)",
+   "About (portrait split + facts)",
+   "Projects (index, then pinned case with recordings)",
+   "Skills (rows)",
+   "Contact (details + form)",
+   "Footer (letter close)"
+  ],
+  "signature": "the command cube, draggable, cut from graphite hairlines",
+  "waived": [
+   "28b"
+  ],
+  "prompt": "redesign my portfolio: keep the cube, join About to the hero, not generic indigo, sophisticated and technological, room for more projects with descriptions and videos, WhatsApp instead of Instagram",
+  "date": "2026-11-06"
+ }
+]

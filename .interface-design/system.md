@@ -78,6 +78,12 @@ Tokens live in `assets/css/tokens.css`; component styles in `assets/css/main.css
 
 ## Content
 
-- Site copy is English. Projects are presented as finished, shipped products.
+- **Positioning: a services offer, not a job search.** The hero status reads "Taking on new
+  projects", the primary action is "Start a project" (to contact), and copy speaks to a
+  client ("what I can build for you"), never to a recruiter ("looking for a role").
+  The résumé download stays, as a secondary action in the hero and the contact section.
+- **Section order:** hero → services → work → about → skills → contact (offer, proof, who).
+- Copy lives in `i18n/locales/en.json` and `es.json`; change both. Projects are presented
+  as finished, shipped products.
 - Project data lives in `data/projects.ts`; only `public: true` entries render, and the
   index, numbering and next/previous links are derived from that list.

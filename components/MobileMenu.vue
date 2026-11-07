@@ -34,16 +34,16 @@ function handleMenuClick(href) {
       class="menu"
       role="dialog"
       aria-modal="true"
-      aria-label="Menu"
+      :aria-label="$t('nav.menu')"
       @keydown.esc="emit('update:mobileMenuOpen', false)"
     >
       <div class="menu__top">
         <Logo />
-        <button type="button" class="icon-btn" aria-label="Close the menu" @click="emit('update:mobileMenuOpen', false)">
+        <button type="button" class="icon-btn" :aria-label="$t('nav.closeMenu')" @click="emit('update:mobileMenuOpen', false)">
           <Icon name="heroicons:x-mark-16-solid" />
         </button>
       </div>
-      <nav class="menu__links" aria-label="Sections">
+      <nav class="menu__links" :aria-label="$t('nav.label')">
         <a
           v-for="link in navLinks"
           :key="link.href + '-mobile'"

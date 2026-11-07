@@ -12,7 +12,7 @@
       <img
         id="picture"
         src="/me/me-960.jpg"
-        alt="Aaron Campos at his desk, with code on the monitor behind him"
+        :alt="$t('about.photoAlt')"
         width="960"
         height="960"
         loading="lazy"

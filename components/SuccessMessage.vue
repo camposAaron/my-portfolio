@@ -1,7 +1,7 @@
 <template>
   <div v-if="show" class="success-message notice" role="alert">
     <Icon name="heroicons:check-circle" />
-    <span>{{ message }}</span>
+    <span>{{ message || $t('form.sent') }}</span>
   </div>
 </template>
 
@@ -13,7 +13,7 @@ defineProps({
   },
   message: {
     type: String,
-    default: 'Message sent. Thanks for writing.'
+    default: ''
   }
 })
 </script>

@@ -20,12 +20,8 @@ const handleSuccess = () => {
   <section id="contact" class="contact" aria-labelledby="contact-heading">
     <div class="container contact__grid">
       <div class="contact__aside" v-reveal>
-        <h2 id="contact-heading">Let’s talk about your team or project.</h2>
-        <p class="contact__intro">
-          If you’re hiring a software engineer, I’d like to hear what your team is building and where I could
-          contribute. For project work, tell me about the workflow you want to improve, the system you already
-          have, and the scope you have in mind.
-        </p>
+        <h2 id="contact-heading">{{ $t('contactSection.title') }}</h2>
+        <p class="contact__intro">{{ $t('contactSection.intro') }}</p>
         <div class="contact__resume">
           <button
             type="button"
@@ -35,12 +31,13 @@ const handleSuccess = () => {
             @click="openResume"
           >
             <Icon name="heroicons:arrow-down-tray-20-solid" />
-            {{ loading ? 'Opening…' : 'Download résumé' }}
+            {{ loading ? $t('resume.opening') : $t('resume.download') }}
           </button>
           <p v-if="failed" class="hero__error" role="alert">
-            The résumé didn’t open. Try again, or write to
-            <a class="link" :href="`mailto:${contact.email}`">{{ contact.email }}</a>.
-          </p>
+          <i18n-t keypath="resume.failed">
+            <template #email><a class="link" :href="`mailto:${contact.email}`">{{ contact.email }}</a></template>
+          </i18n-t>
+        </p>
         </div>
         <ContactInfo />
       </div>

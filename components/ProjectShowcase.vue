@@ -6,6 +6,7 @@ const props = defineProps<{ project: Project; index: number; total: number; prev
 const emit = defineEmits<{ openDialog: [src: string]; go: [id: string] }>()
 
 const num = (i: number) => String(i + 1).padStart(2, '0')
+const tr = useLocalized()
 
 const selected = ref(0)
 const held = ref(false) // paused by the visitor (or by reduced motion)
@@ -76,24 +77,24 @@ onUnmounted(() => {
   <article :id="`case-${project.id}`" class="showcase">
     <div class="showcase__head">
       <div class="showcase__intro" v-reveal>
-        <p class="kicker">Project {{ num(index) }} <span class="kicker__of">/ {{ num(total - 1) }}</span></p>
+        <p class="kicker">{{ $t('projects.project') }} {{ num(index) }} <span class="kicker__of">/ {{ num(total - 1) }}</span></p>
         <h3 class="showcase__name">{{ project.name }}</h3>
-        <p v-if="project.tagline" class="showcase__tagline">{{ project.tagline }}</p>
-        <p v-if="project.summary" class="showcase__summary">{{ project.summary }}</p>
+        <p v-if="project.tagline" class="showcase__tagline">{{ tr(project.tagline) }}</p>
+        <p v-if="project.summary" class="showcase__summary">{{ tr(project.summary) }}</p>
       </div>
       <dl class="showcase__facts" v-reveal="1">
         <div v-if="project.features?.length">
-          <dt>What the platform covers</dt>
+          <dt>{{ $t('projects.covers') }}</dt>
           <dd>
             <ul class="showcase__features">
-              <li v-for="feature in project.features" :key="feature">{{ feature }}</li>
+              <li v-for="feature in project.features" :key="feature.en">{{ tr(feature) }}</li>
             </ul>
           </dd>
         </div>
         <div v-if="project.stack?.length">
-          <dt>Stack</dt>
+          <dt>{{ $t('projects.stack') }}</dt>
           <dd>
-            <ul class="tags" aria-label="Technologies">
+            <ul class="tags" :aria-label="$t('projects.technologies')">
               <li v-for="tech in project.stack" :key="tech">{{ tech }}</li>
             </ul>
           </dd>
@@ -101,7 +102,7 @@ onUnmounted(() => {
       </dl>
     </div>
 
-    <p v-if="project.context" class="showcase__context" v-reveal>{{ project.context }}</p>
+    <p v-if="project.context" class="showcase__context" v-reveal>{{ tr(project.context) }}</p>
 
     <div v-if="project.videos.length" class="player" v-reveal>
       <div
@@ -114,7 +115,7 @@ onUnmounted(() => {
         <button
           type="button"
           class="player__screen"
-          :aria-label="`Open “${current.title}” larger, with video controls`"
+          :aria-label="$t('projects.openLarger', { title: tr(current.title) })"
           @click="emit('openDialog', current.src)"
         >
           <Transition name="preview">
@@ -134,23 +135,23 @@ onUnmounted(() => {
         </button>
         <div class="player__bar">
           <div class="player__now">
-            <span class="player__title">{{ current.title }}</span>
+            <span class="player__title">{{ tr(current.title) }}</span>
             <span v-if="current.duration" class="mono">{{ current.duration }}</span>
           </div>
           <div class="player__controls">
             <button type="button" class="btn btn--quiet" :aria-pressed="held ? 'false' : 'true'" @click="togglePlay">
               <Icon :name="held ? 'heroicons:play-20-solid' : 'heroicons:pause-20-solid'" />
-              {{ held ? 'Play' : 'Pause' }}
+              {{ held ? $t('common.play') : $t('common.pause') }}
             </button>
             <button type="button" class="btn btn--quiet" @click="emit('openDialog', current.src)">
               <Icon name="heroicons:arrows-pointing-out-20-solid" />
-              Expand
+              {{ $t('common.expand') }}
             </button>
           </div>
         </div>
       </div>
 
-      <div ref="listRef" class="player__list" role="tablist" aria-label="Recordings" aria-orientation="vertical">
+      <div ref="listRef" class="player__list" role="tablist" :aria-label="$t('projects.recordingsLabel')" aria-orientation="vertical">
         <span
           class="player__indicator"
           :class="{ 'is-ready': indicator.ready }"
@@ -174,15 +175,15 @@ onUnmounted(() => {
         >
           <img class="rec__thumb" :src="video.poster" alt="" width="1280" height="630" loading="lazy" />
           <span class="rec__text">
-            <span class="rec__title">{{ video.title }}</span>
-            <span v-if="video.description" class="rec__desc">{{ video.description }}</span>
+            <span class="rec__title">{{ tr(video.title) }}</span>
+            <span v-if="video.description" class="rec__desc">{{ tr(video.description) }}</span>
             <span v-if="video.duration" class="rec__time mono">{{ video.duration }}</span>
           </span>
         </button>
       </div>
     </div>
 
-    <nav v-if="prev || next" class="case-step" :aria-label="`After ${project.name}`">
+    <nav v-if="prev || next" class="case-step" :aria-label="$t('projects.after', { name: project.name })">
       <a
         v-if="prev"
         :href="`#case-${prev.id}`"
@@ -191,7 +192,7 @@ onUnmounted(() => {
       >
         <Icon name="heroicons:arrow-left-20-solid" class="case-step__arrow" />
         <span class="case-step__text">
-          <span class="case-step__label mono">Previous project · {{ num(index - 1) }}</span>
+          <span class="case-step__label mono">{{ $t('projects.previous') }} · {{ num(index - 1) }}</span>
           <span class="case-step__name">{{ prev.name }}</span>
         </span>
       </a>
@@ -202,9 +203,9 @@ onUnmounted(() => {
         @click.prevent="emit('go', next.id)"
       >
         <span class="case-step__text">
-          <span class="case-step__label mono">Next project · {{ num(index + 1) }}</span>
+          <span class="case-step__label mono">{{ $t('projects.next') }} · {{ num(index + 1) }}</span>
           <span class="case-step__name">{{ next.name }}</span>
-          <span v-if="next.tagline" class="case-step__tagline">{{ next.tagline }}</span>
+          <span v-if="next.tagline" class="case-step__tagline">{{ tr(next.tagline) }}</span>
         </span>
         <Icon name="heroicons:arrow-right-20-solid" class="case-step__arrow" />
       </a>

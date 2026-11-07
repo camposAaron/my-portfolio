@@ -7,23 +7,14 @@ import { contact } from '~/data/contact'
     <div class="container about__grid">
       <Picture class="picture-about" v-reveal />
       <div class="about__text" v-reveal="1">
-        <h2 id="about-heading">About me</h2>
+        <h2 id="about-heading">{{ $t('about.title') }}</h2>
         <div id="about-desc" class="about__copy">
-          <p>
-            I’m a systems engineer working in software development, with experience across frontend, backend,
-            and cloud technologies. My work includes employee self-service software, where interfaces and
-            services support specific tasks such as downloading payroll documents, requesting leave, and
-            managing internal information.
-          </p>
-          <p>
-            My main tools include TypeScript, Vue.js, Node.js, and PostgreSQL, alongside AWS, Docker, and
-            Kubernetes. I’m looking for a software engineering role where I can contribute to useful products
-            and continue developing my skills in cloud infrastructure and automation.
-          </p>
+          <p>{{ $t('about.p1') }}</p>
+          <p>{{ $t('about.p2') }}</p>
         </div>
         <ul class="about__facts">
-          <li><Icon name="heroicons:map-pin-20-solid" />Based in {{ contact.location }}</li>
-          <li><Icon name="heroicons:briefcase-20-solid" />3+ years in software development</li>
+          <li><Icon name="heroicons:map-pin-20-solid" />{{ $t('about.based', { location: contact.location }) }}</li>
+          <li><Icon name="heroicons:briefcase-20-solid" />{{ $t('about.years') }}</li>
         </ul>
       </div>
     </div>

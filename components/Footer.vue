@@ -8,7 +8,7 @@ const year = new Date().getFullYear()
     <div class="container footer__in">
       <div class="footer__sign">
         <p>{{ contact.name }}</p>
-        <p>{{ contact.role }}, {{ contact.location }}</p>
+        <p>{{ $t('contact.role') }}, {{ contact.location }}</p>
       </div>
       <div class="footer__meta">
         <SocialLinks />

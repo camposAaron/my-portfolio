@@ -8,12 +8,14 @@ defineProps({
   showEmail: { type: Boolean, default: false },
 })
 
-const links = [
+const { t } = useI18n()
+
+const links = computed(() => [
   ...[{ name: 'Email', label: contact.email, url: `mailto:${contact.email}`, icon: 'heroicons:envelope-20-solid', email: true }],
   { name: 'LinkedIn', label: 'Josué Aaron Campos', url: contact.linkedin, icon: 'entypo-social:linkedin' },
   { name: 'GitHub', label: 'github.com/camposAaron', url: contact.github, icon: 'entypo-social:github' },
-  ...(whatsappUrl ? [{ name: 'WhatsApp', label: 'Message me on WhatsApp', url: whatsappUrl, icon: 'heroicons:chat-bubble-left-right-20-solid' }] : []),
-]
+  ...(whatsappUrl ? [{ name: 'WhatsApp', label: t('contactSection.whatsapp'), url: whatsappUrl, icon: 'heroicons:chat-bubble-left-right-20-solid' }] : []),
+])
 </script>
 
 <template>

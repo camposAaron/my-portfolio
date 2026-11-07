@@ -1,0 +1,135 @@
+{
+  "meta": {
+    "description": "Aaron Campos, ingeniero de software en Managua, Nicaragua: aplicaciones web, servicios backend e infraestructura en la nube. Disponible para oportunidades en ingeniería de software."
+  },
+  "common": {
+    "skip": "Saltar al contenido",
+    "play": "Reproducir",
+    "pause": "Pausar",
+    "close": "Cerrar",
+    "expand": "Ampliar"
+  },
+  "contact": {
+    "role": "Ingeniero de software",
+    "status": "Disponible para oportunidades en ingeniería de software"
+  },
+  "nav": {
+    "label": "Secciones",
+    "work": "Proyectos",
+    "about": "Sobre mí",
+    "skills": "Habilidades",
+    "services": "Servicios",
+    "contact": "Contacto",
+    "openMenu": "Abrir el menú",
+    "closeMenu": "Cerrar el menú",
+    "menu": "Menú",
+    "logo": "AaronDEV, volver al inicio",
+    "language": "Idioma",
+    "switchTo": "View in English"
+  },
+  "resume": {
+    "download": "Descargar CV",
+    "opening": "Abriendo…",
+    "failed": "El CV no se abrió. Inténtalo de nuevo o escríbeme a {email}."
+  },
+  "hero": {
+    "line1": "Aplicaciones web.",
+    "line2": "Servicios backend.",
+    "line3": "Infraestructura en la nube.",
+    "intro": "Soy ingeniero de software en Managua, Nicaragua, con más de 3 años de experiencia desarrollando aplicaciones web. Mi trabajo abarca interfaces, servicios backend y tecnologías en la nube, incluida una plataforma de autogestión para empleados con documentos de nómina, solicitudes de permisos y flujos internos.",
+    "viewWork": "Ver mis proyectos"
+  },
+  "cube": {
+    "label": "Un cubo de comandos de terminal: kubectl, docker-compose, git y aws. Arrástralo para girarlo.",
+    "hint": "Arrástralo para girarlo"
+  },
+  "projects": {
+    "kicker": "Proyectos destacados",
+    "title": "Productos que he entregado, grabados en uso.",
+    "navLabel": "Proyectos",
+    "recordings": "sin grabaciones | 1 grabación | {n} grabaciones",
+    "project": "Proyecto",
+    "covers": "Qué cubre la plataforma",
+    "stack": "Tecnologías",
+    "technologies": "Tecnologías",
+    "openLarger": "Abrir “{title}” en grande, con controles de video",
+    "recordingsLabel": "Grabaciones",
+    "dialogLabel": "Grabación del proyecto",
+    "after": "Después de {name}",
+    "previous": "Proyecto anterior",
+    "next": "Siguiente proyecto"
+  },
+  "about": {
+    "title": "Sobre mí",
+    "p1": "Soy ingeniero en sistemas y trabajo en desarrollo de software, con experiencia en frontend, backend y tecnologías en la nube. Mi trabajo incluye software de autogestión para empleados, donde las interfaces y los servicios resuelven tareas concretas como descargar documentos de nómina, solicitar permisos y gestionar información interna.",
+    "p2": "Mis herramientas principales son TypeScript, Vue.js, Node.js y PostgreSQL, junto con AWS, Docker y Kubernetes. Busco un puesto en ingeniería de software donde pueda aportar a productos útiles y seguir desarrollando mis habilidades en infraestructura en la nube y automatización.",
+    "based": "Vivo en {location}",
+    "years": "Más de 3 años en desarrollo de software",
+    "photoAlt": "Aaron Campos en su escritorio, con código en el monitor detrás de él"
+  },
+  "skills": {
+    "title": "De la interfaz a la infraestructura",
+    "lead": "Mi experiencia conecta la capa de aplicación con los servicios y la infraestructura que la sostienen.",
+    "flowLabel": "Cómo se conectan las capas: Frontend, Backend y Cloud",
+    "tools": "Herramientas: {group}",
+    "groups": {
+      "frontend": {
+        "title": "Desarrollo frontend",
+        "layer": "Interfaz",
+        "description": "Interfaces web para formularios, dashboards y flujos de empleados."
+      },
+      "backend": {
+        "title": "Desarrollo backend",
+        "layer": "Servicios",
+        "description": "Servicios y manejo de datos detrás de las funcionalidades de la aplicación y los procesos de negocio."
+      },
+      "cloud": {
+        "title": "Nube y despliegue",
+        "layer": "Infraestructura",
+        "description": "Tecnologías de nube y contenedores usadas junto al desarrollo de aplicaciones."
+      }
+    }
+  },
+  "services": {
+    "title": "Cómo puedo ayudar",
+    "intro": "Mientras busco un puesto en ingeniería de software, estoy abierto a conversar sobre proyectos de desarrollo puntuales. Estas son las áreas donde mi experiencia actual puede aportar.",
+    "cta": "Conversemos sobre un proyecto",
+    "items": {
+      "webapps": {
+        "title": "Aplicaciones web para negocios",
+        "text": "Crear o ampliar herramientas internas, dashboards y aplicaciones de autogestión para flujos de negocio concretos, con Vue.js, TypeScript y un backend en Node.js."
+      },
+      "backend": {
+        "title": "Servicios backend e integraciones",
+        "text": "Desarrollar APIs y funcionalidades backend, conectar los componentes de la aplicación y trabajar con PostgreSQL para sostener los datos detrás de los procesos de negocio."
+      },
+      "cloud": {
+        "title": "Despliegue en la nube y contenedores",
+        "text": "Ayudar a preparar y desplegar aplicaciones web con AWS y herramientas basadas en contenedores, con un alcance definido según los requisitos de la aplicación."
+      },
+      "automation": {
+        "title": "Automatización de procesos",
+        "text": "Identificar pasos repetitivos en un proceso existente y crear herramientas o integraciones puntuales para reducir el trabajo manual."
+      }
+    }
+  },
+  "contactSection": {
+    "title": "Hablemos de tu equipo o proyecto.",
+    "intro": "Si estás contratando a un ingeniero de software, me gustaría saber qué está construyendo tu equipo y dónde podría aportar. Si se trata de un proyecto, cuéntame qué flujo quieres mejorar, qué sistema tienes hoy y qué alcance tienes en mente.",
+    "whatsapp": "Escríbeme por WhatsApp"
+  },
+  "form": {
+    "name": "Nombre *",
+    "email": "Correo *",
+    "message": "Mensaje *",
+    "send": "Enviar mensaje",
+    "sending": "Enviando…",
+    "sent": "Mensaje enviado. Gracias por escribir.",
+    "errors": {
+      "nameRequired": "El nombre es obligatorio",
+      "emailInvalid": "El formato del correo no es válido",
+      "emailRequired": "El correo es obligatorio",
+      "messageRequired": "El mensaje es obligatorio"
+    }
+  }
+}
